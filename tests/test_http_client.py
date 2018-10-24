@@ -1,4 +1,5 @@
 import pytest
+from .helpers import is_str
 from .context import HttpClient
 import datetime
 from pprint import pprint
@@ -19,7 +20,7 @@ def test_can_raw_request_to_snap():
         request_url='https://app.sandbox.midtrans.com/snap/v1/transactions',
         parameters=generate_param_min())
     assert isinstance(response_dict, dict)
-    assert type(response_dict['token']) is str
+    assert is_str(response_dict['token'])
 
 def test_response_not_json_exception():
     http_client = HttpClient()

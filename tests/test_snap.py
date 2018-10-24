@@ -1,9 +1,10 @@
 import pytest
+from .helpers import is_str
 from .context import midtransclient
 import datetime
 from pprint import pprint
 
-reused_order_id = "py-midtransclient-test-"+str(datetime.datetime.now().timestamp())
+reused_order_id = "py-midtransclient-test-"+str(datetime.datetime.now()).replace(" ", "").replace(":", "")
 
 def test_snap_class():
     snap = generate_snap_instance()
@@ -11,8 +12,8 @@ def test_snap_class():
     assert "create_transaction" in methods
     assert "create_transaction_token" in methods
     assert "create_transaction_redirect_url" in methods
-    assert type(snap.api_config.server_key) is str
-    assert type(snap.api_config.client_key) is str
+    assert is_str(snap.api_config.server_key)
+    assert is_str(snap.api_config.client_key)
 
 def test_snap_create_transaction_min():
     snap = generate_snap_instance()
@@ -20,28 +21,28 @@ def test_snap_create_transaction_min():
     param['transaction_details']['order_id'] = reused_order_id
     transaction = snap.create_transaction(param)
     assert isinstance(transaction, dict)
-    assert type(transaction['token']) is str
-    assert type(transaction['redirect_url']) is str
+    assert is_str(transaction['token'])
+    assert is_str(transaction['redirect_url'])
 
 def test_snap_create_transaction_max():
     snap = generate_snap_instance()
     param = generate_param_max()
     transaction = snap.create_transaction(param)
     assert isinstance(transaction, dict)
-    assert type(transaction['token']) is str
-    assert type(transaction['redirect_url']) is str
+    assert is_str(transaction['token'])
+    assert is_str(transaction['redirect_url'])
 
 def test_snap_create_transaction_token():
     snap = generate_snap_instance()
     param = generate_param_min()
     token = snap.create_transaction_token(param)
-    assert type(token) is str
+    assert is_str(token)
 
 def test_snap_create_transaction_redirect_url():
     snap = generate_snap_instance()
     param = generate_param_min()
     redirect_url = snap.create_transaction_redirect_url(param)
-    assert type(redirect_url) is str
+    assert is_str(redirect_url)
 
 def test_snap_status_fail_404():
     snap = generate_snap_instance()

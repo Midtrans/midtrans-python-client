@@ -1,4 +1,5 @@
 import pytest
+from .helpers import is_str
 from .context import midtransclient
 import datetime
 import json
@@ -8,9 +9,9 @@ USED_SERVER_KEY='SB-Mid-server-GwUP_WGbJPXsDzsNEBRs8IYA'
 USED_CLIENT_KEY='SB-Mid-client-61XuGAwQ8Bj8LxSS'
 
 REUSED_ORDER_ID = [
-    "py-midtransclient-test1-"+str(datetime.datetime.now().timestamp()),
-    "py-midtransclient-test2-"+str(datetime.datetime.now().timestamp()),
-    "py-midtransclient-test3-"+str(datetime.datetime.now().timestamp()),
+    "py-midtransclient-test1-"+str(datetime.datetime.now()).replace(" ", "").replace(":", ""),
+    "py-midtransclient-test2-"+str(datetime.datetime.now()).replace(" ", "").replace(":", ""),
+    "py-midtransclient-test3-"+str(datetime.datetime.now()).replace(" ", "").replace(":", ""),
 ]
 CC_TOKEN = ''
 SAVED_CC_TOKEN = ''
@@ -20,8 +21,8 @@ def test_core_api_class():
     core = generate_core_api_instance()
     methods = dir(core)
     assert "charge" in methods
-    assert type(core.api_config.server_key) is str
-    assert type(core.api_config.client_key) is str
+    assert is_str(core.api_config.server_key)
+    assert is_str(core.api_config.client_key)
 
 def test_core_api_card_token():
     core = generate_core_api_instance()
@@ -37,7 +38,7 @@ def test_core_api_card_token():
     assert int(response['status_code']) == 200
     global CC_TOKEN
     CC_TOKEN = response['token_id']
-    assert type(response['token_id']) is str
+    assert is_str(response['token_id'])
 
 def test_core_api_card_register():
     core = generate_core_api_instance()
@@ -53,7 +54,7 @@ def test_core_api_card_register():
     assert int(response['status_code']) == 200
     global SAVED_CC_TOKEN
     SAVED_CC_TOKEN = response['saved_token_id']
-    assert type(response['saved_token_id']) is str
+    assert is_str(response['saved_token_id'])
 
 def test_core_api_card_point_inquiry_fail_402():
     core = generate_core_api_instance()
