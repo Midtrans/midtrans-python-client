@@ -2,6 +2,11 @@ import sys
 import json
 
 class Transactions:
+    """
+    These are wrapper/implementation of API methods described on: 
+    https://api-docs.midtrans.com/#midtrans-api
+    """
+    
     def __init__(self,parent):
         self.parent = parent
 

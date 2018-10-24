@@ -45,6 +45,7 @@ class CoreApi:
     def capture(self,parameters=dict()):
         """
         Trigger `/capture` API call to Core API
+        Capture is only used for pre-authorize transaction only
         :param parameters: dictionary of Core API JSON body as parameter, will be converted to JSON
         (more params detail refer to: https://api-docs.midtrans.com)
 
