@@ -345,6 +345,12 @@ param = {
 refund_response = api_client.transactions.refund('YOUR_ORDER_ID OR TRANSACTION_ID',param)
 ```
 
+## 3. Examples
+Examples are available on [/examples](/examples) folder.
+There are:
+- [Core Api examples](/examples/core_api)
+- [Snap examples](/examples/snap_api)
+- [Flask App examples](/examples/flask_app) that implement Snap & Core Api
 
 #### Get help
 
