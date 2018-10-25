@@ -12,7 +12,7 @@ test_req = pkg_req + [
 
 setuptools.setup(
     name="midtransclient",
-    version="1.0.0",
+    version="1.0.1",
     author="Rizda Prasetya",
     author_email="rizda.prasetya@midtrans.com",
     license='MIT',
@@ -32,6 +32,7 @@ setuptools.setup(
         'License :: OSI Approved :: MIT License',
         'Topic :: Software Development :: Libraries :: Python Modules'
     ],
+    python_requires='>=2.7',
     install_requires=pkg_req,
     tests_requires=test_req
 )
