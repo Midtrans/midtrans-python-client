@@ -1,7 +1,7 @@
 Midtrans Client - Python
 ===============
 
-Midtrans :heart: Python! 🐍
+Midtrans ❤️ Python! 🐍
 
 This is the Official Python API client/library for Midtrans Payment API. Visit [https://midtrans.com](https://midtrans.com). More information about the product and see documentation at [http://docs.midtrans.com](http://docs.midtrans) for more technical details.
 

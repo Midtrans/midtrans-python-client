@@ -3,3 +3,6 @@ tests/__pycache__
 *.pyc
 midtransclient/*.pyc
 midtransclient.egg-info
+dist/
+build/
+push_to_twine.sh
