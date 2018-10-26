@@ -12,7 +12,7 @@ test_req = pkg_req + [
 
 setuptools.setup(
     name="midtransclient",
-    version="1.0.1",
+    version="1.0.2",
     author="Rizda Prasetya",
     author_email="rizda.prasetya@midtrans.com",
     license='MIT',
@@ -24,7 +24,6 @@ setuptools.setup(
     classifiers=[
         'Programming Language :: Python',
         'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.3',
