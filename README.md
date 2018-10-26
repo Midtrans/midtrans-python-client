@@ -1,6 +1,8 @@
 Midtrans Client - Python
 ===============
 
+[![Build Status](https://travis-ci.org/rizdaprasetya/midtrans-python-client.svg?branch=master)](https://travis-ci.org/rizdaprasetya/midtrans-python-client)
+
 Midtrans ❤️ Python! 🐍
 
 This is the Official Python API client/library for Midtrans Payment API. Visit [https://midtrans.com](https://midtrans.com). More information about the product and see documentation at [http://docs.midtrans.com](http://docs.midtrans) for more technical details.
