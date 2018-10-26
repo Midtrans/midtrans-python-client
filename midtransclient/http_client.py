@@ -36,7 +36,7 @@ class HttpClient(object):
         headers = {
             'content-type': 'application/json',
             'accept': 'application/json',
-            'user-agent': 'midtransclient-python/1.0.0'
+            'user-agent': 'midtransclient-python/1.0.2'
         }
 
         response_object = self.http_client.request(
