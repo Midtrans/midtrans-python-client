@@ -51,7 +51,7 @@ class CoreApi:
 
         :return: Dictionary from JSON decoded response
         """
-        api_url = self.api_config.get_core_api_base_url()+'/charge'
+        api_url = self.api_config.get_core_api_base_url()+'/capture'
 
         response_dict, response_object = self.http_client.request(
             'post',
