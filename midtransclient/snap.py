@@ -52,6 +52,3 @@ class Snap:
         Wrapper method that call `create_transaction` and directly :return: `redirect_url`
         """
         return self.create_transaction(parameters)['redirect_url']
-
-class MidtransSnapAPIError(Exception):
-    pass
