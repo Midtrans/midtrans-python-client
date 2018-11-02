@@ -12,14 +12,14 @@ test_req = pkg_req + [
 
 setuptools.setup(
     name="midtransclient",
-    version="1.0.3",
+    version="1.0.5",
     author="Rizda Prasetya",
     author_email="rizda.prasetya@midtrans.com",
     license='MIT',
     description="Official Midtrans Payment API Client",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/midtrans/midtrans-client-python",
+    url="https://github.com/midtrans/midtrans-python-client/",
     packages=setuptools.find_packages(),
     classifiers=[
         'Programming Language :: Python',

@@ -17,7 +17,7 @@ pip install midtransclient
 
 ### 1.b Manual Installation
 
-If you are not using Pip, you can clone or [download](https://github.com/midtrans/midtrans-client-python/archive/master.zip) this repository.
+If you are not using Pip, you can clone or [download](https://github.com/midtrans/midtrans-python-client/archive/master.zip) this repository.
 Then import from `midtransclient` folder.
 
 Or run Pip install from the repo folder.
@@ -43,7 +43,7 @@ Get your client key and server key from [Midtrans Dashboard](https://dashboard.m
 Create API client object
 
 ```python
-# Core API
+# Create Core API instance
 core_api = midtransclient.CoreApi(
     is_production=False,
     server_key='YOUR_SERVER_KEY',
@@ -53,7 +53,7 @@ core_api = midtransclient.CoreApi(
 
 
 ```python
-# Snap API
+# Create Snap API instance
 snap = midtransclient.Snap(
     is_production=False,
     server_key='YOUR_SERVER_KEY',
@@ -115,6 +115,13 @@ def create_transactions_redirect_url(parameter):
 #### Get Snap Token
 
 ```python
+# Create Snap API instance
+snap = midtransclient.Snap(
+    is_production=False,
+    server_key='YOUR_SERVER_KEY',
+    client_key='YOUR_CLIENT_KEY'
+)
+# Build API parameter
 param = {
     "transaction_details": {
         "order_id": "test-transaction-123",
@@ -176,6 +183,13 @@ Also available as examples [here](examples/snap).
 #### Get Redirection URL of a Payment Page
 
 ```python
+# Create Snap API instance
+snap = midtransclient.Snap(
+    is_production=False,
+    server_key='YOUR_SERVER_KEY',
+    client_key='YOUR_CLIENT_KEY'
+)
+# Build API parameter
 param = {
     "transaction_details": {
         "order_id": "test-transaction-123",
@@ -255,6 +269,13 @@ Get token should be handled on  Frontend please refer to [API docs](https://api-
 #### Credit Card Charge
 
 ```python
+# Create Core API instance
+core_api = midtransclient.Snap(
+    is_production=False,
+    server_key='YOUR_SERVER_KEY',
+    client_key='YOUR_CLIENT_KEY'
+)
+# Build API parameter
 param = {
     "payment_type": "credit_card",
     "transaction_details": {
@@ -267,7 +288,7 @@ param = {
 }
 
 # charge transaction
-charge_response = snap.charge(param)
+charge_response = core_api.charge(param)
 print('charge_response:')
 print(charge_response)
 ```
@@ -280,6 +301,12 @@ HTTP notification will be sent whenever transaction status is changed.
 Example also available [here](examples/transaction_actions/notification_example.py)
 
 ```python
+# Create Core API / Snap instance (both have shared `transactions` methods)
+api_client = midtransclient.CoreApi(
+    is_production=False,
+    server_key='YOUR_SERVER_KEY',
+    client_key='YOUR_CLIENT_KEY'
+)
 status_response = api_client.transactions.notification(mock_notification)
 
 order_id = status_response['order_id']
