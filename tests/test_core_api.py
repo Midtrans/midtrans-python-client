@@ -128,10 +128,10 @@ def test_core_api_notification_from_json_fail():
 
 def test_core_api_expire():
     core = generate_core_api_instance()
-    response = core.transactions.cancel(REUSED_ORDER_ID[0])
+    response = core.transactions.expire(REUSED_ORDER_ID[0])
     assert isinstance(response, dict)
-    assert int(response['status_code']) == 200
-    assert response['transaction_status'] == 'cancel'
+    assert int(response['status_code']) == 407
+    assert response['transaction_status'] == 'expire'
 
 def test_core_api_approve_fail_cannot_be_updated():
     core = generate_core_api_instance()

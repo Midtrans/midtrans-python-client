@@ -58,7 +58,7 @@ class HttpClient(object):
         if response_object.status_code >= 300:
             raise MidtransAPIError('Midtrans API is returning API error. HTTP status code: `{0}`. API response: `{1}`'.format(response_object.status_code,response_object.text))
         # raise core API error status code
-        if 'status_code' in response_dict.keys() and int(response_dict['status_code']) >= 300:
+        if 'status_code' in response_dict.keys() and int(response_dict['status_code']) >= 300 and int(response_dict['status_code']) != 407:
             raise MidtransAPIError('Midtrans API is returning API error. API status code: `{0}`. API response: `{1}`'.format(response_dict['status_code'],response_object.text))
 
         return response_dict, response_object
