@@ -2,6 +2,7 @@ Midtrans Client - Python
 ===============
 
 [![Build Status](https://travis-ci.org/rizdaprasetya/midtrans-python-client.svg?branch=master)](https://travis-ci.org/rizdaprasetya/midtrans-python-client)
+[![PyPI version](https://badge.fury.io/py/midtransclient.svg)](https://badge.fury.io/py/midtransclient)
 
 Midtrans ❤️ Python! 🐍
 
@@ -260,7 +261,7 @@ def card_point_inquiry(self,token_id):
     :return: Dictionary from JSON decoded response
     """
 ```
-`parameter` is Dictionary or String of JSON of [SNAP Parameter](https://api-docs.midtrans.com/#json-objects)
+`parameter` is Dictionary or String of JSON of [Core API Parameter](https://api-docs.midtrans.com/#json-objects)
 
 #### Credit Card Get Token
 

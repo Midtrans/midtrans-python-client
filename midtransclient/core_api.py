@@ -4,7 +4,7 @@ from .transactions import Transactions
 
 class CoreApi:
     """
-    CoreApi object used to do request to Midtrans Snap API
+    CoreApi object used to do request to Midtrans Core API
     """
 
     def __init__(self, 
@@ -100,7 +100,7 @@ class CoreApi:
     def card_point_inquiry(self,token_id):
         """
         Trigger `/point_inquiry/<token-id>` API call to Core API
-        :param parameters: dictionary of Core API JSON body as parameter, will be converted to JSON
+        :param token_id: token id of credit card
         (more params detail refer to: https://api-docs.midtrans.com)
 
         :return: Dictionary from JSON decoded response
