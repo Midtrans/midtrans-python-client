@@ -158,4 +158,4 @@ def core_api_credit_card_frontend_sample():
         client_key = core.api_config.client_key)
 
 if __name__ == '__main__':
-    app.run(debug=True,port=5000)
+    app.run(debug=True,port=5000,host='0.0.0.0')
