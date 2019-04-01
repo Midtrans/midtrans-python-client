@@ -6,7 +6,8 @@
 - Update version on `./setup.py` file
 - To run test, run `pytest`
 - To install the package locally with a symlink `pip install -e .`
-- To update https://pypi.org repo, run these on terminal:
+- To update https://pypi.org repo, update `setup.py` version variable.
+- then run these on terminal:
 ```bash
 # install setuptools & wheel
 python -m pip install --upgrade setuptools wheel
