@@ -24,3 +24,9 @@ twine upload dist/*;
 # To upload to test pypi use this instead
 # twine upload --repository-url https://test.pypi.org/legacy/ dist/*;
 ```
+
+## Dev & Test via Docker Compose
+
+- To use docker-compose to test and run project, `cd` to repo dir
+- Run `docker-compose up`, which basically run pytest on container
+- Run `docker-compose down`, to clean up when done
