@@ -188,7 +188,7 @@ def test_core_api_status_fail_404():
 def test_core_api_status_server_key_change_via_property():
     core = midtransclient.CoreApi(is_production=False,server_key='',client_key='')
     core.api_config.server_key = USED_SERVER_KEY
-    response = core.transactions.status(REUSED_ORDER_ID[0])
+    response = core.transactions.status(REUSED_ORDER_ID[1])
     assert isinstance(response, dict)
     assert int(response['status_code']) == 200
     assert response['transaction_status'] == 'cancel'
@@ -219,7 +219,7 @@ def test_core_api_status_server_key_change_via_setter():
     assert core.api_config.is_production == False
     assert core.api_config.server_key == USED_SERVER_KEY
     assert core.api_config.client_key == USED_CLIENT_KEY
-    response = core.transactions.status(REUSED_ORDER_ID[0])
+    response = core.transactions.status(REUSED_ORDER_ID[1])
     assert isinstance(response, dict)
     assert int(response['status_code']) == 200
     assert response['transaction_status'] == 'cancel'
