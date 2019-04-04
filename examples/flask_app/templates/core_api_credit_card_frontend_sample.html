@@ -102,7 +102,7 @@
       // TODO: Change with your client key.
       Veritrans.client_key = "{{ client_key }}";
       Veritrans.token(
-        function(){
+        function getCardData(){
           return {
             "card_number": document.querySelector("#card-number").value,
             "card_exp_month": document.querySelector("#card-expiry-month").value,
@@ -110,7 +110,7 @@
             "card_cvv": document.querySelector("#card-cvv").value,
           }
         },
-        function(response){
+        function cardTokenCallback(response){
           if (response.status_code == "200") {
             // Success to get card token_id, implement as you wish here:
             document.querySelector("#token_id_result").value = response.token_id;
@@ -130,7 +130,7 @@
       redirect_url = document.querySelector("#redirect_url").value;
       Veritrans.authenticate(
         redirect_url,
-        function(response){
+        function authenticationRedirectCallback(response){
           if (response.redirect_url){
             // 3ds authentication redirect_url received, open iframe to display to customer
             popupModal.openPopup(response.redirect_url);
