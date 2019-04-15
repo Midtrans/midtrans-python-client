@@ -6,4 +6,4 @@ midtransclient.egg-info
 dist/
 build/
 push_to_twine.sh
-Pipfile
+./Pipfile

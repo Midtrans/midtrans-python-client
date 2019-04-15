@@ -16,6 +16,8 @@ Midtrans Snap with Flask (Python). To start:
 	- `python web.py`, or
 	- `FLASK_APP=web.py flask run`,
 
+> Or replace step 3 & 4 by `pipenv install`, if you are using pipenv.
+
 The app will run at port 5000.
 
 ## Run With Docker
