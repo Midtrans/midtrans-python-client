@@ -133,8 +133,8 @@
       function receiveMessageFromIframe(event) {
         // make sure POSTmessage is coming from Midtrans
         if (
-          event.origin !== "https://api.sandbox.veritrans.co.id" &&
-          event.origin !== "https://api.veritrans.co.id" &&
+          (event.origin !== "https://api.sandbox.veritrans.co.id" &&
+          event.origin !== "https://api.veritrans.co.id") || 
           !event.isTrusted
         ){ return; }
         // make sure POSTmessage have data.status_code
