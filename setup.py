@@ -12,7 +12,7 @@ test_req = pkg_req + [
 
 setuptools.setup(
     name="midtransclient",
-    version="1.0.7",
+    version="1.1.0",
     author="Rizda Prasetya",
     author_email="rizda.prasetya@midtrans.com",
     license='MIT',
