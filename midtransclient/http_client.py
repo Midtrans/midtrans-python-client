@@ -1,6 +1,8 @@
 import requests
 import json
 import sys
+from .error_midtrans import MidtransAPIError
+from .error_midtrans import JSONDecodeError
 
 class HttpClient(object):
     """
@@ -31,7 +33,7 @@ class HttpClient(object):
                 parameters = json.loads(parameters)
             except Exception as e:
                 raise JSONDecodeError('fail to parse `parameters` string as JSON. Use JSON string or Dict as `parameters`. with message: `{0}`'.format(repr(e)))
-        
+
         payload = json.dumps(parameters) if method != 'get' else parameters
         headers = {
             'content-type': 'application/json',
@@ -56,15 +58,21 @@ class HttpClient(object):
 
         # raise API error HTTP status code
         if response_object.status_code >= 300:
-            raise MidtransAPIError('Midtrans API is returning API error. HTTP status code: `{0}`. API response: `{1}`'.format(response_object.status_code,response_object.text))
+            raise MidtransAPIError(
+                message='Midtrans API is returning API error. HTTP status code: `{0}`. '
+                'API response: `{1}`'.format(response_object.status_code,response_object.text),
+                api_response_dict=response_dict,
+                http_status_code=response_object.status_code,
+                raw_http_client_data=response_object
+            )
         # raise core API error status code
         if 'status_code' in response_dict.keys() and int(response_dict['status_code']) >= 300 and int(response_dict['status_code']) != 407:
-            raise MidtransAPIError('Midtrans API is returning API error. API status code: `{0}`. API response: `{1}`'.format(response_dict['status_code'],response_object.text))
+            raise MidtransAPIError(
+                'Midtrans API is returning API error. API status code: `{0}`. '
+                'API response: `{1}`'.format(response_dict['status_code'],response_object.text),
+                api_response_dict=response_dict,
+                http_status_code=response_object.status_code,
+                raw_http_client_data=response_object
+            )
 
         return response_dict, response_object
-
-class JSONDecodeError(Exception):
-    pass
-
-class MidtransAPIError(Exception):
-    pass

@@ -62,8 +62,8 @@ def test_core_api_card_point_inquiry_fail_402():
         response = core.card_point_inquiry(CC_TOKEN)
     except Exception as e:
         err = e
-    assert 'MidtransAPIError' in repr(err)
-    assert '402' in repr(err)
+    assert 'MidtransAPIError' in err.__class__.__name__
+    assert '402' in err.message
 
 
 def test_core_api_charge_cc_simple():
@@ -140,8 +140,8 @@ def test_core_api_approve_fail_cannot_be_updated():
         response = core.transactions.approve(REUSED_ORDER_ID[1])
     except Exception as e:
         err = e
-    assert 'MidtransAPIError' in repr(err)
-    assert '412' in repr(err)
+    assert 'MidtransAPIError' in err.__class__.__name__
+    assert '412' in err.message
 
 def test_core_api_deny_cannot_be_updated():
     core = generate_core_api_instance()
@@ -150,8 +150,8 @@ def test_core_api_deny_cannot_be_updated():
         response = core.transactions.deny(REUSED_ORDER_ID[1])
     except Exception as e:
         err = e
-    assert 'MidtransAPIError' in repr(err)
-    assert '412' in repr(err)
+    assert 'MidtransAPIError' in err.__class__.__name__
+    assert '412' in err.message
 
 def test_core_api_cancel():
     core = generate_core_api_instance()
@@ -171,8 +171,8 @@ def test_core_api_refund_fail_not_yet_settlement():
         response = core.transactions.refund(REUSED_ORDER_ID[2],params)
     except Exception as e:
         err = e
-    assert 'MidtransAPIError' in repr(err)
-    assert '412' in repr(err)
+    assert 'MidtransAPIError' in err.__class__.__name__
+    assert '412' in err.message
 
 def test_core_api_status_fail_404():
     core = generate_core_api_instance()
@@ -181,9 +181,9 @@ def test_core_api_status_fail_404():
         response = core.transactions.status('non-exist-order-id')
     except Exception as e:
         err = e
-    assert 'MidtransAPIError' in repr(err)
-    assert '404' in repr(err)
-    assert 'exist' in repr(err)
+    assert 'MidtransAPIError' in err.__class__.__name__
+    assert '404' in err.message
+    assert 'exist' in err.message
 
 def test_core_api_status_server_key_change_via_property():
     core = midtransclient.CoreApi(is_production=False,server_key='',client_key='')
@@ -202,7 +202,7 @@ def test_core_api_status_server_key_change_via_setter():
     try:
         response = core.transactions.status('non-exist-order-id')
     except Exception as e:
-        assert '404' in repr(e)
+        assert '404' in e.message
 
     core.api_config.set(is_production=True,
         server_key='abc')
@@ -211,7 +211,7 @@ def test_core_api_status_server_key_change_via_setter():
     try:
         response = core.transactions.status(REUSED_ORDER_ID[0])
     except Exception as e:
-        assert '401' in repr(e)
+        assert '401' in e.message
 
     core.api_config.set(is_production=False,
         server_key=USED_SERVER_KEY,
@@ -233,9 +233,9 @@ def test_core_api_charge_fail_401():
         response = core.charge(parameters)
     except Exception as e:
         err = e
-    assert 'MidtransAPIError' in repr(err)
-    assert '401' in repr(err)
-    assert 'unauthorized' in repr(err)
+    assert 'MidtransAPIError' in err.__class__.__name__
+    assert '401' in err.message
+    assert 'unauthorized' in err.message
 
 def test_core_api_charge_fail_empty_param():
     core = generate_core_api_instance()
@@ -245,9 +245,9 @@ def test_core_api_charge_fail_empty_param():
         response = core.charge(parameters)
     except Exception as e:
         err = e
-    assert 'MidtransAPIError' in repr(err)
-    assert '500' in repr(err)
-    assert 'unexpected' in repr(err)
+    assert 'MidtransAPIError' in err.__class__.__name__
+    assert '500' in err.message
+    assert 'unexpected' in err.message
 
 def test_core_api_charge_fail_zero_gross_amount():
     core = generate_core_api_instance()
@@ -258,8 +258,20 @@ def test_core_api_charge_fail_zero_gross_amount():
         response = core.charge(parameters)
     except Exception as e:
         err = e
-    assert 'MidtransAPIError' in repr(err)
-    assert '400' in repr(err)
+    assert 'MidtransAPIError' in err.__class__.__name__
+    assert '400' in err.message
+
+def test_core_api_exception_MidtransAPIError():
+    core = generate_core_api_instance()
+    err = ''
+    try:
+        response = core.transactions.status('non-exist-order-id')
+    except Exception as e:
+        err = e
+    assert 'MidtransAPIError' in err.__class__.__name__
+    assert is_str(err.message)
+    assert isinstance(err.api_response_dict, dict)
+    assert isinstance(err.http_status_code,int)
 
 # ======== HELPER FUNCTIONS BELOW ======== #
 def generate_core_api_instance():

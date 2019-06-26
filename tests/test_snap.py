@@ -51,9 +51,9 @@ def test_snap_status_fail_404():
         response = snap.transactions.status('non-exist-order-id')
     except Exception as e:
         err = e
-    assert 'MidtransAPIError' in repr(err)
-    assert '404' in repr(err)
-    assert 'exist' in repr(err)
+    assert 'MidtransAPIError' in err.__class__.__name__
+    assert '404' in err.message
+    assert 'exist' in err.message
 
 def test_snap_request_fail_401():
     snap = generate_snap_instance()
@@ -64,9 +64,9 @@ def test_snap_request_fail_401():
         transaction = snap.create_transaction(param)
     except Exception as e:
         err = e
-    assert 'MidtransAPIError' in repr(err)
-    assert '401' in repr(err)
-    assert 'unauthorized' in repr(err)
+    assert 'MidtransAPIError' in err.__class__.__name__
+    assert '401' in err.message
+    assert 'unauthorized' in err.message
 
 def test_snap_request_fail_empty_param():
     snap = generate_snap_instance()
@@ -76,9 +76,9 @@ def test_snap_request_fail_empty_param():
         transaction = snap.create_transaction(param)
     except Exception as e:
         err = e
-    assert 'MidtransAPIError' in repr(err)
-    assert '400' in repr(err)
-    assert 'is required' in repr(err)
+    assert 'MidtransAPIError' in err.__class__.__name__
+    assert '400' in err.message
+    assert 'is required' in err.message
 
 def test_snap_request_fail_zero_gross_amount():
     snap = generate_snap_instance()
@@ -89,7 +89,21 @@ def test_snap_request_fail_zero_gross_amount():
         transaction = snap.create_transaction(param)
     except Exception as e:
         err = e
-    assert 'MidtransAPIError' in repr(err)
+    assert 'MidtransAPIError' in err.__class__.__name__
+
+def test_snap_exception_MidtransAPIError():
+    snap = generate_snap_instance()
+    snap.api_config.server_key=''
+    param = generate_param_min()
+    err = ''
+    try:
+        transaction = snap.create_transaction(param)
+    except Exception as e:
+        err = e
+    assert 'MidtransAPIError' in err.__class__.__name__
+    assert is_str(err.message)
+    assert isinstance(err.api_response_dict, dict)
+    assert isinstance(err.http_status_code,int)
 
 # ======== HELPER FUNCTIONS BELOW ======== #
 def generate_snap_instance():

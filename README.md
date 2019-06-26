@@ -149,7 +149,7 @@ Replace `PUT_TRANSACTION_TOKEN_HERE` with `transaction_token` acquired above
 <html>
   <body>
     <button id="pay-button">Pay!</button>
-    <pre><div id="result-json">JSON result will appear here after payment:<br></div></pre> 
+    <pre><div id="result-json">JSON result will appear here after payment:<br></div></pre>
 
 <!-- TODO: Remove ".sandbox" from script src URL for production environment. Also input your client key in "data-client-key" -->
     <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="<Set your ClientKey here>"></script>
@@ -308,7 +308,7 @@ For full example on Credit Card 3DS transaction refer to:
 
 > **IMPORTANT NOTE**: To update transaction status on your backend/database, **DO NOT** solely rely on frontend callbacks! For security reason to make sure the status is authentically coming from Midtrans, only update transaction status based on HTTP Notification or API Get Status.
 
-Create separated web endpoint (notification url) to receive HTTP POST notification callback/webhook. 
+Create separated web endpoint (notification url) to receive HTTP POST notification callback/webhook.
 HTTP notification will be sent whenever transaction status is changed.
 Example also available [here](examples/transaction_actions/notification_example.py)
 
@@ -336,8 +336,8 @@ if transaction_status == 'capture':
     # TODO set transaction status on your databaase to 'challenge'
   else if fraud_status == 'accept':
     # TODO set transaction status on your databaase to 'success'
-else if transaction_status == 'cancel' or 
-  transaction_status == 'deny' or 
+else if transaction_status == 'cancel' or
+  transaction_status == 'deny' or
   transaction_status == 'expire':
   # TODO set transaction status on your databaase to 'failure'
 else if transaction_status == 'pending':
@@ -348,7 +348,7 @@ else if transaction_status == 'pending':
 Also available as examples [here](examples/transaction_actions)
 #### Get Status
 ```python
-# get status of transaction that already recorded on midtrans (already `charge`-ed) 
+# get status of transaction that already recorded on midtrans (already `charge`-ed)
 status_response = api_client.transactions.status('YOUR_ORDER_ID OR TRANSACTION_ID')
 ```
 #### Get Status B2B
@@ -386,7 +386,22 @@ param = {
 refund_response = api_client.transactions.refund('YOUR_ORDER_ID OR TRANSACTION_ID',param)
 ```
 
-## 3. Examples
+## 3. Handling Error / Exception
+When using function that result in Midtrans API call e.g: `core.charge(...)` or `snap.create_transaction(...)`
+there's a chance it may throw error (`MidtransAPIError` object), the error object will contains below properties that can be used as information to your error handling logic:
+```python
+err = None
+try:
+    transaction = snap.create_transaction(param)
+except Exception as e:
+    err = e
+err.message
+err.api_response_dict
+err.http_status_code
+err.raw_http_client_data
+```
+
+## 4. Examples
 Examples are available on [/examples](/examples) folder.
 There are:
 - [Core Api examples](/examples/core_api)
