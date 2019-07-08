@@ -70,16 +70,16 @@
 
   <!-- Javascript for token generation -->
   <script type="text/javascript">
-      var cardData = {
-        "card_number": document.querySelector(".card-number").value,
-        "card_exp_month": document.querySelector(".card-expiry-month").value,
-        "card_exp_year": document.querySelector(".card-expiry-year").value,
-        "card_cvv": document.querySelector(".card-cvv").value,
-      };
-
       // On Submit button clicked
       document.querySelector(".submit-button").onclick = function (event) {
         console.log("SUBMIT button clicked");
+        // prepare cardData
+        var cardData = {
+          "card_number": document.querySelector(".card-number").value,
+          "card_exp_month": document.querySelector(".card-expiry-month").value,
+          "card_exp_year": document.querySelector(".card-expiry-year").value,
+          "card_cvv": document.querySelector(".card-cvv").value,
+        };
         // [1] Use card data to get card token on the callback
         MidtransNew3ds.getCardToken(cardData, getCardTokenCallback);
 
