@@ -129,34 +129,32 @@
     document.querySelector("#authentication-form").onsubmit = function(e){
       var redirect_url = document.querySelector("#redirect_url").value;
 
-      // prepare function to handle POSTmessage from 3ds iframe
-      function receiveMessageFromIframe(event) {
-        // make sure POSTmessage is coming from Midtrans
-        if (
-          (event.origin !== "https://api.sandbox.veritrans.co.id" &&
-          event.origin !== "https://api.veritrans.co.id") || 
-          !event.isTrusted
-        ){ return; }
-        // make sure POSTmessage have data.status_code
-        if (!event.data.status_code){ return; }
-
-        var response = event.data;
-        if (response.status_code == "200"){
-          // 3ds authentication success, implement payment success scenario
-          popupModal.closePopup();
-          document.querySelector("#result").innerText = JSON.stringify(response,null,2);
-        } 
-        else {
-          // 3ds authentication failure, implement payment failure scenario
-          popupModal.closePopup();
-          document.querySelector("#result").innerText = JSON.stringify(response,null,2);
+      // Utilize MidtransNew3Ds.authenticate function to perform 3DS authentication,
+      // and handle the success/failure result
+      MidtransNew3ds.authenticate(
+        redirect_url,
+        {
+          performAuthentication: function(redirect_url){
+            // open iframe to display 3ds authentication redirect_url to customer
+            popupModal.openPopup(redirect_url);
+          },
+          onSuccess: function(response){
+            // 3ds authentication success, implement payment success scenario
+            popupModal.closePopup();
+            document.querySelector("#result").innerText = JSON.stringify(response,null,2);
+          },
+          onFailure: function(response){
+            // 3ds authentication failure, implement payment failure scenario
+            popupModal.closePopup();
+            document.querySelector("#result").innerText = JSON.stringify(response,null,2);
+          },
+          onPending: function(response){
+            // transaction is pending, transaction result will be notified later via POST notification
+            popupModal.closePopup();
+            document.querySelector("#result").innerText = JSON.stringify(response,null,2)
+          }
         }
-      }
-      // register listener to receive POSTmessage from 3ds iframe
-      window.addEventListener("message", receiveMessageFromIframe, false);
-
-      // open iframe to display 3ds authentication redirect_url to customer
-      popupModal.openPopup(redirect_url);
+      );
 
       return e.preventDefault() && 0; // prevent form submit
     }
