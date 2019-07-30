@@ -53,18 +53,21 @@ def simple_core_api_checkout():
 def charge_core_api_ajax():
     request_json = request.get_json()
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    charge_api_response = core.charge({
-        "payment_type": "credit_card",
-        "transaction_details": {
-            "gross_amount": 200000,
-            "order_id": "order-id-python-"+timestamp,
-        },
-        "credit_card":{
-            "token_id": request_json['token_id'],
-            "authentication": request_json['authenticate_3ds'],
-        }
-    })
-    return jsonify(charge_api_response)
+    try:
+        charge_api_response = core.charge({
+            "payment_type": "credit_card",
+            "transaction_details": {
+                "gross_amount": 200000,
+                "order_id": "order-id-python-"+timestamp,
+            },
+            "credit_card":{
+                "token_id": request_json['token_id'],
+                "authentication": request_json['authenticate_3ds'],
+            }
+        })
+    except Exception as e:
+        charge_api_response = e.api_response_dict
+    return charge_api_response
 
 # [4] Handle Core API check transaction status
 @app.route('/check_transaction_status', methods=['POST'])
