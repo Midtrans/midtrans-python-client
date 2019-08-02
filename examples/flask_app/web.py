@@ -84,11 +84,20 @@ def check_transaction_status():
         elif fraud_status == 'accept':
             # TODO set transaction status on your databaase to 'success'
             None
+    elif transaction_status == 'settlement':
+        # TODO set transaction status on your databaase to 'success'
+        # Note: Non-card transaction will become 'settlement' on payment success
+        # Card transaction will also become 'settlement' D+1, which you can ignore
+        # because most of the time 'capture' is enough to be considered as success
+        None
     elif transaction_status == 'cancel' or transaction_status == 'deny' or transaction_status == 'expire':
         # TODO set transaction status on your databaase to 'failure'
         None
     elif transaction_status == 'pending':
         # TODO set transaction status on your databaase to 'pending' / waiting payment
+        None
+    elif transaction_status == 'refund':
+        # TODO set transaction status on your databaase to 'refund'
         None
     return jsonify(transaction_status)
 
@@ -118,11 +127,20 @@ def notification_handler():
         elif fraud_status == 'accept':
             # TODO set transaction status on your databaase to 'success'
             None
+    elif transaction_status == 'settlement':
+        # TODO set transaction status on your databaase to 'success'
+        # Note: Non card transaction will become 'settlement' on payment success
+        # Credit card will also become 'settlement' D+1, which you can ignore
+        # because most of the time 'capture' is enough to be considered as success
+        None
     elif transaction_status == 'cancel' or transaction_status == 'deny' or transaction_status == 'expire':
         # TODO set transaction status on your databaase to 'failure'
         None
     elif transaction_status == 'pending':
         # TODO set transaction status on your databaase to 'pending' / waiting payment
+        None
+    elif transaction_status == 'refund':
+        # TODO set transaction status on your databaase to 'refund'
         None
     app.logger.info(summary)
     return jsonify(summary)
