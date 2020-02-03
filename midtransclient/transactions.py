@@ -67,6 +67,15 @@ class Transactions:
             parameters)
         return response_dict
 
+    def refundDirect(self, transaction_id,parameters=dict()):
+        api_url = self.parent.api_config.get_core_api_base_url()+'/'+transaction_id+'/refund/online/direct'
+        response_dict, response_object = self.parent.http_client.request(
+            'post',
+            self.parent.api_config.server_key,
+            api_url,
+            parameters)
+        return response_dict
+
     def notification(self, notification=dict()):
         is_notification_string = isinstance(notification, str if sys.version_info[0] >= 3 else basestring)
         if is_notification_string:

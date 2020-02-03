@@ -163,12 +163,28 @@ def test_core_api_cancel():
 def test_core_api_refund_fail_not_yet_settlement():
     core = generate_core_api_instance()
     params = {
+        "refund_key": "order1-ref1",
         "amount": 5000,
         "reason": "for some reason"
     }
     err = ''
     try:
         response = core.transactions.refund(REUSED_ORDER_ID[2],params)
+    except Exception as e:
+        err = e
+    assert 'MidtransAPIError' in err.__class__.__name__
+    assert '412' in err.message
+
+def test_core_api_direct_refund_fail_not_yet_settlement():
+    core = generate_core_api_instance()
+    params = {
+        "refund_key": "order1-ref1",
+        "amount": 5000,
+        "reason": "for some reason"
+    }
+    err = ''
+    try:
+        response = core.transactions.refundDirect(REUSED_ORDER_ID[2],params)
     except Exception as e:
         err = e
     assert 'MidtransAPIError' in err.__class__.__name__
