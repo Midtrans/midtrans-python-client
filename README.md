@@ -380,10 +380,22 @@ expire_response = api_client.transactions.expire('YOUR_ORDER_ID OR TRANSACTION_I
 ```python
 # refund a transaction (not all payment channel allow refund via API)
 param = {
+    "refund_key": "order1-ref1",
     "amount": 5000,
     "reason": "Item out of stock"
 }
 refund_response = api_client.transactions.refund('YOUR_ORDER_ID OR TRANSACTION_ID',param)
+```
+
+#### Refund Transaction with Direct Refund
+```python
+# refund a transaction (not all payment channel allow refund via API) with Direct Refund
+param = {
+    "refund_key": "order1-ref1",
+    "amount": 5000,
+    "reason": "Item out of stock"
+}
+refund_response = api_client.transactions.refundDirect('YOUR_ORDER_ID OR TRANSACTION_ID',param)
 ```
 
 ## 3. Handling Error / Exception
