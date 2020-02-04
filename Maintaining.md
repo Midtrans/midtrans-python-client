@@ -2,10 +2,16 @@
 
 ## Updating Package
 
-- Make your changes
+- If from scratch, using `pipenv`
+	- Install pipenv `pip install pipenv` or `pip3 install pipenv`
+	- CD to project directory
+	- Install using pipenv `pipenv install`
+	- Activate and enter python env for current folder `pipenv shell`, now you are inside python env
+	- Install project as local package `pip install -e .`
+- Make your code changes
 - Increase `version` value on `./setup.py` file
-- To run test, run `pytest`
 - To install the package locally with a symlink `pip install -e .`
+- To run test, run `pytest`
 - To update https://pypi.org repo, run these on terminal:
 ```bash
 # install setuptools & wheel
