@@ -27,7 +27,7 @@ core = midtransclient.CoreApi(
 params = {
     'card_number': '5264 2210 3887 4659',
     'card_exp_month': '12',
-    'card_exp_year': '2020',
+    'card_exp_year': '2025',
     'card_cvv': '123',
     'client_key': core.api_config.client_key,
 }
