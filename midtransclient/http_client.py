@@ -3,6 +3,7 @@ import json
 import sys
 from .error_midtrans import MidtransAPIError
 from .error_midtrans import JSONDecodeError
+from .helpers import merge_two_dicts, _PYTHON_VERSION
 
 class HttpClient(object):
     """
@@ -13,13 +14,14 @@ class HttpClient(object):
     def __init__(self):
         self.http_client = requests
 
-    def request(self, method, server_key, request_url, parameters=dict()):
+    def request(self, method, server_key, request_url, parameters=dict(), headers=dict()):
         """
         Perform http request to an url (supposedly Midtrans API url)
         :param method: http method
         :param server_key: Midtrans API server_key that will be used as basic auth header
         :param request_url: target http url
         :param parameters: dictionary of Midtrans API JSON body as parameter, will be converted to JSON
+        :param headers: dictionary of custom headers that you can sent to Midtrans API
 
         :return: tuple of:
         response_dict: Dictionary from JSON decoded response
@@ -35,11 +37,18 @@ class HttpClient(object):
                 raise JSONDecodeError('fail to parse `parameters` string as JSON. Use JSON string or Dict as `parameters`. with message: `{0}`'.format(repr(e)))
 
         payload = json.dumps(parameters) if method != 'get' else parameters
-        headers = {
+
+        default_headers = {
             'content-type': 'application/json',
             'accept': 'application/json',
             'user-agent': 'midtransclient-python/1.0.2'
         }
+
+        # fastest merging two dict according https://stackoverflow.com/a/26853961/2212582
+        if _PYTHON_VERSION >= (3, 5):
+            headers = {**default_headers, **headers}
+        else:
+            headers = merge_two_dicts(default_headers, headers)
 
         response_object = self.http_client.request(
             method,

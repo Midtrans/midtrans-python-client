@@ -24,7 +24,7 @@ class Snap:
     def api_config(self, new_value):
         self.__api_config = new_value
 
-    def create_transaction(self,parameters=dict()):
+    def create_transaction(self,parameters=dict(),headers=dict()):
         """
         Trigger API call to Snap API
         :param parameters: dictionary of SNAP API JSON body as parameter, will be converted to JSON
@@ -38,17 +38,18 @@ class Snap:
             'post',
             self.api_config.server_key,
             api_url,
-            parameters)
+            parameters,
+            headers)
         return response_dict
 
-    def create_transaction_token(self,parameters=dict()):
+    def create_transaction_token(self,parameters=dict(),headers=dict()):
         """
         Wrapper method that call `create_transaction` and directly :return: `token`
         """
-        return self.create_transaction(parameters)['token']
+        return self.create_transaction(parameters, headers)['token']
 
-    def create_transaction_redirect_url(self,parameters=dict()):
+    def create_transaction_redirect_url(self,parameters=dict(),headers=dict()):
         """
         Wrapper method that call `create_transaction` and directly :return: `redirect_url`
         """
-        return self.create_transaction(parameters)['redirect_url']
+        return self.create_transaction(parameters, headers)['redirect_url']
