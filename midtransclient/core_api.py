@@ -10,9 +10,11 @@ class CoreApi:
     def __init__(self, 
             is_production=False,
             server_key='',
-            client_key=''):
+            client_key='',
+            custom_headers=dict(),
+            proxies=dict()):
 
-        self.api_config = ApiConfig(is_production,server_key,client_key)
+        self.api_config = ApiConfig(is_production,server_key,client_key,custom_headers,proxies)
         self.http_client = HttpClient()
         self.transactions = Transactions(self)
 
@@ -57,7 +59,9 @@ class CoreApi:
             'post',
             self.api_config.server_key,
             api_url,
-            parameters)
+            parameters,
+            self.api_config.custom_headers,
+            self.api_config.proxies)
 
         return response_dict
 
@@ -75,7 +79,9 @@ class CoreApi:
             'get',
             self.api_config.server_key,
             api_url,
-            parameters)
+            parameters,
+            self.api_config.custom_headers,
+            self.api_config.proxies)
 
         return response_dict
 
@@ -93,7 +99,9 @@ class CoreApi:
             'get',
             self.api_config.server_key,
             api_url,
-            parameters)
+            parameters,
+            self.api_config.custom_headers,
+            self.api_config.proxies)
         
         return response_dict
 
@@ -110,6 +118,9 @@ class CoreApi:
         response_dict, response_object = self.http_client.request(
             'get',
             self.api_config.server_key,
-            api_url)
+            api_url,
+            dict(),
+            self.api_config.custom_headers,
+            self.api_config.proxies)
 
         return response_dict

@@ -3,6 +3,7 @@ import json
 import sys
 from .error_midtrans import MidtransAPIError
 from .error_midtrans import JSONDecodeError
+from .helpers import merge_two_dicts_shallow, _PYTHON_VERSION
 
 class HttpClient(object):
     """
@@ -13,7 +14,8 @@ class HttpClient(object):
     def __init__(self):
         self.http_client = requests
 
-    def request(self, method, server_key, request_url, parameters=dict()):
+    def request(self, method, server_key, request_url, parameters=dict(), 
+        custom_headers=dict(), proxies=dict()):
         """
         Perform http request to an url (supposedly Midtrans API url)
         :param method: http method
@@ -27,7 +29,7 @@ class HttpClient(object):
         """
 
         # allow string of JSON to be used as parameters
-        is_parameters_string = isinstance(parameters, str if sys.version_info[0] >= 3 else basestring)
+        is_parameters_string = isinstance(parameters, str if _PYTHON_VERSION >= (3, 0) else basestring)
         if is_parameters_string:
             try:
                 parameters = json.loads(parameters)
@@ -35,11 +37,16 @@ class HttpClient(object):
                 raise JSONDecodeError('fail to parse `parameters` string as JSON. Use JSON string or Dict as `parameters`. with message: `{0}`'.format(repr(e)))
 
         payload = json.dumps(parameters) if method != 'get' else parameters
-        headers = {
+        default_headers = {
             'content-type': 'application/json',
             'accept': 'application/json',
-            'user-agent': 'midtransclient-python/1.0.2'
+            'user-agent': 'midtransclient-python/1.2.0'
         }
+        headers = default_headers
+
+        # only merge if custom headers exist
+        if custom_headers:
+            headers = merge_two_dicts_shallow(default_headers, custom_headers)
 
         response_object = self.http_client.request(
             method,
@@ -48,6 +55,7 @@ class HttpClient(object):
             data=payload if method != 'get' else None,
             params=payload if method == 'get' else None,
             headers=headers,
+            proxies=proxies,
             allow_redirects=True
         )
         # catch response JSON decode error
@@ -57,7 +65,7 @@ class HttpClient(object):
             raise JSONDecodeError('Fail to decode API response as JSON, API response is not JSON: `{0}`. with message: `{1}`'.format(response_object.text,repr(e)))
 
         # raise API error HTTP status code
-        if response_object.status_code >= 300:
+        if response_object.status_code >= 400:
             raise MidtransAPIError(
                 message='Midtrans API is returning API error. HTTP status code: `{0}`. '
                 'API response: `{1}`'.format(response_object.status_code,response_object.text),
@@ -66,7 +74,7 @@ class HttpClient(object):
                 raw_http_client_data=response_object
             )
         # raise core API error status code
-        if 'status_code' in response_dict.keys() and int(response_dict['status_code']) >= 300 and int(response_dict['status_code']) != 407:
+        if 'status_code' in response_dict.keys() and int(response_dict['status_code']) >= 400 and int(response_dict['status_code']) != 407:
             raise MidtransAPIError(
                 'Midtrans API is returning API error. API status code: `{0}`. '
                 'API response: `{1}`'.format(response_dict['status_code'],response_object.text),
