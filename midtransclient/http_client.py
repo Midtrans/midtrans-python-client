@@ -57,7 +57,7 @@ class HttpClient(object):
             raise JSONDecodeError('Fail to decode API response as JSON, API response is not JSON: `{0}`. with message: `{1}`'.format(response_object.text,repr(e)))
 
         # raise API error HTTP status code
-        if response_object.status_code >= 300:
+        if response_object.status_code >= 400:
             raise MidtransAPIError(
                 message='Midtrans API is returning API error. HTTP status code: `{0}`. '
                 'API response: `{1}`'.format(response_object.status_code,response_object.text),
@@ -66,7 +66,7 @@ class HttpClient(object):
                 raw_http_client_data=response_object
             )
         # raise core API error status code
-        if 'status_code' in response_dict.keys() and int(response_dict['status_code']) >= 300 and int(response_dict['status_code']) != 407:
+        if 'status_code' in response_dict.keys() and int(response_dict['status_code']) >= 400 and int(response_dict['status_code']) != 407:
             raise MidtransAPIError(
                 'Midtrans API is returning API error. API status code: `{0}`. '
                 'API response: `{1}`'.format(response_dict['status_code'],response_object.text),
