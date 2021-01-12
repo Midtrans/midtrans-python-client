@@ -3,7 +3,7 @@ import json
 import sys
 from .error_midtrans import MidtransAPIError
 from .error_midtrans import JSONDecodeError
-from .helpers import merge_two_dicts, _PYTHON_VERSION
+from .helpers import merge_two_dicts_shallow, _PYTHON_VERSION
 
 class HttpClient(object):
     """
@@ -42,12 +42,11 @@ class HttpClient(object):
             'accept': 'application/json',
             'user-agent': 'midtransclient-python/1.2.0'
         }
+        headers = default_headers
 
-        # fastest merging two dict according https://stackoverflow.com/a/26853961/2212582
-        if _PYTHON_VERSION >= (3, 5):
-            custom_headers = {**default_headers, **custom_headers}
-        else:
-            custom_headers = merge_two_dicts(default_headers, custom_headers)
+        # only merge if custom headers exist
+        if custom_headers:
+            headers = merge_two_dicts_shallow(default_headers, custom_headers)
 
         response_object = self.http_client.request(
             method,
@@ -55,7 +54,7 @@ class HttpClient(object):
             auth=requests.auth.HTTPBasicAuth(server_key, ''),
             data=payload if method != 'get' else None,
             params=payload if method == 'get' else None,
-            headers=custom_headers,
+            headers=headers,
             proxies=proxies,
             allow_redirects=True
         )
