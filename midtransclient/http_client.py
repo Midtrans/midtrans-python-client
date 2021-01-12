@@ -3,6 +3,7 @@ import json
 import sys
 from .error_midtrans import MidtransAPIError
 from .error_midtrans import JSONDecodeError
+from .helpers import merge_two_dicts, _PYTHON_VERSION
 
 class HttpClient(object):
     """
@@ -13,7 +14,8 @@ class HttpClient(object):
     def __init__(self):
         self.http_client = requests
 
-    def request(self, method, server_key, request_url, parameters=dict()):
+    def request(self, method, server_key, request_url, parameters=dict(), 
+        custom_headers=dict(), proxies=dict()):
         """
         Perform http request to an url (supposedly Midtrans API url)
         :param method: http method
@@ -27,7 +29,7 @@ class HttpClient(object):
         """
 
         # allow string of JSON to be used as parameters
-        is_parameters_string = isinstance(parameters, str if sys.version_info[0] >= 3 else basestring)
+        is_parameters_string = isinstance(parameters, str if _PYTHON_VERSION >= (3, 0) else basestring)
         if is_parameters_string:
             try:
                 parameters = json.loads(parameters)
@@ -35,11 +37,17 @@ class HttpClient(object):
                 raise JSONDecodeError('fail to parse `parameters` string as JSON. Use JSON string or Dict as `parameters`. with message: `{0}`'.format(repr(e)))
 
         payload = json.dumps(parameters) if method != 'get' else parameters
-        headers = {
+        default_headers = {
             'content-type': 'application/json',
             'accept': 'application/json',
             'user-agent': 'midtransclient-python/1.0.2'
         }
+
+        # fastest merging two dict according https://stackoverflow.com/a/26853961/2212582
+        if _PYTHON_VERSION >= (3, 5):
+            custom_headers = {**default_headers, **custom_headers}
+        else:
+            custom_headers = merge_two_dicts(default_headers, custom_headers)
 
         response_object = self.http_client.request(
             method,
@@ -47,7 +55,8 @@ class HttpClient(object):
             auth=requests.auth.HTTPBasicAuth(server_key, ''),
             data=payload if method != 'get' else None,
             params=payload if method == 'get' else None,
-            headers=headers,
+            headers=custom_headers,
+            proxies=proxies,
             allow_redirects=True
         )
         # catch response JSON decode error
