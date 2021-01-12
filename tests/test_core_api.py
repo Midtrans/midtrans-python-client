@@ -29,7 +29,7 @@ def test_core_api_card_token():
     params = {
         'card_number': '5264 2210 3887 4659',
         'card_exp_month': '12',
-        'card_exp_year': '2020',
+        'card_exp_year': '2030',
         'card_cvv': '123',
         'client_key': core.api_config.client_key,
     }
@@ -45,7 +45,7 @@ def test_core_api_card_register():
     params = {
         'card_number': '4811 1111 1111 1114',
         'card_exp_month': '12',
-        'card_exp_year': '2020',
+        'card_exp_year': '2030',
         'card_cvv': '123',
         'client_key': core.api_config.client_key,
     }
@@ -242,7 +242,7 @@ def test_core_api_status_server_key_change_via_setter():
 
 def test_core_api_charge_fail_401():
     core = generate_core_api_instance()
-    core.api_config.server_key=''
+    core.api_config.server_key='invalidkey'
     parameters = generate_param_min()
     err = ''
     try:
@@ -251,7 +251,7 @@ def test_core_api_charge_fail_401():
         err = e
     assert 'MidtransAPIError' in err.__class__.__name__
     assert '401' in err.message
-    assert 'unauthorized' in err.message
+    assert 'authorized' in err.message
 
 def test_core_api_charge_fail_empty_param():
     core = generate_core_api_instance()
