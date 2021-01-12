@@ -12,6 +12,7 @@
 - Increase `version` value on `./setup.py` file
 - To install the package locally with a symlink `pip install -e .`
 - To run test, run `pytest`
+	- To run specific test, e.g: `pytest -k "test_core_api_charge_fail_401"`
 - To update https://pypi.org repo, run these on terminal:
 ```bash
 # install setuptools & wheel
