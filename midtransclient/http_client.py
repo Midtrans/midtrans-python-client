@@ -40,7 +40,7 @@ class HttpClient(object):
         default_headers = {
             'content-type': 'application/json',
             'accept': 'application/json',
-            'user-agent': 'midtransclient-python/1.0.2'
+            'user-agent': 'midtransclient-python/1.2.0'
         }
 
         # fastest merging two dict according https://stackoverflow.com/a/26853961/2212582
