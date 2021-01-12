@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 pkg_req = [
-    'requests>=2.3.0'
+    'requests>=2.25.0'
 ]
 test_req = pkg_req + [
     'pytest>=3.0.6'
