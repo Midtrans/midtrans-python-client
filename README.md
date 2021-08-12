@@ -480,7 +480,7 @@ Under the hood this API wrapper is using [Requests](https://github.com/requests/
 Examples are available on [/examples](/examples) folder.
 There are:
 - [Core Api examples](/examples/core_api)
-- [Snap examples](/examples/snap_api)
+- [Snap examples](/examples/snap)
 - [Flask App examples](/examples/flask_app) that implement Snap & Core Api
 
 #### Get help
