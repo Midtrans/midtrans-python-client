@@ -1,8 +1,15 @@
+# This is just for very basic implementation reference, in production, you should validate the incoming requests and implement your backend more securely.
+
 import datetime
 import json
+import os
 from flask import Flask, render_template, request, jsonify
-
 from midtransclient import Snap, CoreApi
+
+# Set Your server key
+# can find in Merchant Portal -> Settings -> Access keys
+SERVER_KEY = ''
+CLIENT_KEY = ''
 
 app = Flask(__name__)
 
@@ -15,8 +22,8 @@ app = Flask(__name__)
 def simple_checkout():
     snap = Snap(
         is_production=False,
-        server_key='SB-Mid-server-GwUP_WGbJPXsDzsNEBRs8IYA',
-        client_key='SB-Mid-client-61XuGAwQ8Bj8LxSS',
+        server_key=SERVER_KEY,
+        client_key=CLIENT_KEY
     )
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     transaction_token = snap.create_transaction_token({
@@ -27,10 +34,10 @@ def simple_checkout():
             "secure" : True
         }
     })
+    
     return render_template('simple_checkout.html', 
         token = transaction_token, 
         client_key = snap.api_config.client_key)
-
 
 #==============#
 # Using Core API - Credit Card
@@ -39,8 +46,8 @@ def simple_checkout():
 # [0] Setup API client and config
 core = CoreApi(
     is_production=False,
-    server_key='SB-Mid-server-GwUP_WGbJPXsDzsNEBRs8IYA',
-    client_key='SB-Mid-client-61XuGAwQ8Bj8LxSS',
+    server_key=SERVER_KEY,
+    client_key=CLIENT_KEY
 )
 # [1] Render HTML+JS web page to get card token_id and [3] 3DS authentication
 @app.route('/simple_core_api_checkout')
@@ -171,12 +178,27 @@ def simple_core_api_checkout_permata():
 # Homepage of this web app
 @app.route('/')
 def index():
+    if not SERVER_KEY or not CLIENT_KEY:
+        # non-relevant function only used for demo/example purpose
+        return printExampleWarningMessage()
+
     return render_template('index.html')
+
 # credit card frontend demo
 @app.route('/core_api_credit_card_frontend_sample')
 def core_api_credit_card_frontend_sample():
     return render_template('core_api_credit_card_frontend_sample.html', 
         client_key = core.api_config.client_key)
+
+
+def printExampleWarningMessage():
+    pathfile = os.path.abspath("web.py")
+    message = "<code><h4>Please set your server key and client key from sandbox</h4>In file: " + pathfile
+    message += "<br><br># Set Your server key"
+    message += "<br># can find in Merchant Portal -> Settings -> Access keys"
+    message += "<br>SERVER_KEY = ''"
+    message += "<br>CLIENT_KEY = ''</code>"
+    return message
 
 if __name__ == '__main__':
     app.run(debug=True,port=5000,host='0.0.0.0')

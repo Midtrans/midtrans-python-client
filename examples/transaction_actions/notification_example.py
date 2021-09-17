@@ -1,6 +1,10 @@
 import midtransclient
+# This is just for very basic implementation reference, in production, you should validate the incoming requests and implement your backend more securely.
+# Please refer to this docs for sample HTTP POST notifications:
+# https://docs.midtrans.com/en/after-payment/http-notification?id=sample-of-different-payment-channels
 
 # initialize api client object
+# can find in Merchant Portal -> Settings -> Access keys
 api_client = midtransclient.CoreApi(
     is_production=False,
     server_key='YOUR_SERVER_KEY',
