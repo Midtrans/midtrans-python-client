@@ -3,8 +3,8 @@ import midtransclient
 # Please refer to this docs for sample HTTP POST notifications:
 # https://docs.midtrans.com/en/after-payment/http-notification?id=sample-of-different-payment-channels
 
-# initialize api client object
-# can find in Merchant Portal -> Settings -> Access keys
+# Initialize api client object
+# You can find it in Merchant Portal -> Settings -> Access keys
 api_client = midtransclient.CoreApi(
     is_production=False,
     server_key='YOUR_SERVER_KEY',
