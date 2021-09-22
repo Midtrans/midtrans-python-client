@@ -1,12 +1,15 @@
 import midtransclient
-# initialize core api client object
+# This is just for very basic implementation reference, in production, you should validate the incoming requests and implement your backend more securely.
+
+# Initialize core api client object
+# You can find it in Merchant Portal -> Settings -> Access keys
 core = midtransclient.CoreApi(
     is_production=False,
     server_key='YOUR_SERVER_KEY',
     client_key='YOUR_CLIENT_KEY'
 )
 
-# prepare CORE API parameter ( refer to: https://api-docs.midtrans.com ) charge bank_transfer parameter example
+# prepare CORE API parameter ( refer to: https://docs.midtrans.com/en/core-api/bank-transfer?id=sample-request-and-request-body ) charge bank_transfer parameter example
 param = {
     "payment_type": "bank_transfer",
     "transaction_details": {
