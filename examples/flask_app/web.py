@@ -7,9 +7,9 @@ from flask import Flask, render_template, request, jsonify
 from midtransclient import Snap, CoreApi
 
 # Set Your server key
-# can find in Merchant Portal -> Settings -> Access keys
-SERVER_KEY = ''
-CLIENT_KEY = ''
+# You can find it in Merchant Portal -> Settings -> Access keys
+SERVER_KEY = 'SB-Mid-server-GwUP_WGbJPXsDzsNEBRs8IYA'
+CLIENT_KEY = 'SB-Mid-client-61XuGAwQ8Bj8LxSS'
 
 app = Flask(__name__)
 
@@ -195,7 +195,7 @@ def printExampleWarningMessage():
     pathfile = os.path.abspath("web.py")
     message = "<code><h4>Please set your server key and client key from sandbox</h4>In file: " + pathfile
     message += "<br><br># Set Your server key"
-    message += "<br># can find in Merchant Portal -> Settings -> Access keys"
+    message += "<br># You can find it in Merchant Portal -> Settings -> Access keys"
     message += "<br>SERVER_KEY = ''"
     message += "<br>CLIENT_KEY = ''</code>"
     return message
