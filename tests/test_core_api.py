@@ -1,21 +1,10 @@
 import pytest
+from .config import *
 from .helpers import is_str
 from .context import midtransclient
 import datetime
 import json
 from pprint import pprint
-
-USED_SERVER_KEY='SB-Mid-server-GwUP_WGbJPXsDzsNEBRs8IYA'
-USED_CLIENT_KEY='SB-Mid-client-61XuGAwQ8Bj8LxSS'
-
-REUSED_ORDER_ID = [
-    "py-midtransclient-test1-"+str(datetime.datetime.now()).replace(" ", "").replace(":", ""),
-    "py-midtransclient-test2-"+str(datetime.datetime.now()).replace(" ", "").replace(":", ""),
-    "py-midtransclient-test3-"+str(datetime.datetime.now()).replace(" ", "").replace(":", ""),
-]
-CC_TOKEN = ''
-SAVED_CC_TOKEN = ''
-API_RESPONSE = ''
 
 def test_core_api_class():
     core = generate_core_api_instance()
@@ -58,13 +47,13 @@ def test_core_api_card_register():
 
 def test_core_api_card_point_inquiry_fail_402():
     core = generate_core_api_instance()
+    err = ''
     try:
         response = core.card_point_inquiry(CC_TOKEN)
     except Exception as e:
         err = e
     assert 'MidtransAPIError' in err.__class__.__name__
     assert '402' in err.message
-
 
 def test_core_api_charge_cc_simple():
     core = generate_core_api_instance()
