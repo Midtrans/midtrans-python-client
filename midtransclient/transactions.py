@@ -99,7 +99,7 @@ class Transactions:
         return response_dict
 
     def notification(self, notification=dict()):
-        is_notification_string = isinstance(notification, str if sys.version_info[0] >= 3 else basestring)
+        is_notification_string = isinstance(notification, str)
         if is_notification_string:
             try:
                 notification = json.loads(notification)

@@ -3,7 +3,6 @@ import json
 import sys
 from .error_midtrans import MidtransAPIError
 from .error_midtrans import JSONDecodeError
-from .helpers import merge_two_dicts_shallow, _PYTHON_VERSION
 
 class HttpClient(object):
     """
@@ -29,7 +28,7 @@ class HttpClient(object):
         """
 
         # allow string of JSON to be used as parameters
-        is_parameters_string = isinstance(parameters, str if _PYTHON_VERSION >= (3, 0) else basestring)
+        is_parameters_string = isinstance(parameters, str)
         if is_parameters_string:
             try:
                 parameters = json.loads(parameters)
@@ -46,7 +45,7 @@ class HttpClient(object):
 
         # only merge if custom headers exist
         if custom_headers:
-            headers = merge_two_dicts_shallow(default_headers, custom_headers)
+            headers = {**default_headers, **headers}
 
         response_object = self.http_client.request(
             method,
