@@ -1,12 +1,10 @@
 import pytest
+from .config import USED_SERVER_KEY, USED_CLIENT_KEY
 from .helpers import is_str
 from .context import midtransclient
 import datetime
 import json
 from pprint import pprint
-
-USED_SERVER_KEY='SB-Mid-server-GwUP_WGbJPXsDzsNEBRs8IYA'
-USED_CLIENT_KEY='SB-Mid-client-61XuGAwQ8Bj8LxSS'
 
 REUSED_ORDER_ID = [
     "py-midtransclient-test1-"+str(datetime.datetime.now()).replace(" ", "").replace(":", ""),
