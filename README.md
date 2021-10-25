@@ -483,6 +483,10 @@ There are:
 - [Snap examples](/examples/snap)
 - [Flask App examples](/examples/flask_app) that implement Snap & Core Api
 
+## Important Changes
+### v1.3.0
+- **Drop support for Python 2** (because Python 2 has reached its end of life), in favor of better compatibility with Python 3 and to prevent package unable to be properly installed on Windows OS env.
+
 #### Get help
 
 * [Midtrans Docs](https://docs.midtrans.com)
