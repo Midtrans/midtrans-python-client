@@ -6,10 +6,11 @@ import os
 from flask import Flask, render_template, request, jsonify
 from midtransclient import Snap, CoreApi
 
-# Set Your server key
+# @TODO: Change/fill the following API Keys variable with Your own server & client keys
 # You can find it in Merchant Portal -> Settings -> Access keys
 SERVER_KEY = 'SB-Mid-server-GwUP_WGbJPXsDzsNEBRs8IYA'
 CLIENT_KEY = 'SB-Mid-client-61XuGAwQ8Bj8LxSS'
+# Note: by default it uses hardcoded sandbox demo API keys for demonstration purpose
 
 app = Flask(__name__)
 
