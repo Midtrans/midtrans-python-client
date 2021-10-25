@@ -8,7 +8,7 @@ Midtrans Snap with Flask (Python). To start:
 
 ## Run Natively / Without Docker
 
-1. Install Python (3.6.0, for instance, as used by this example)
+1. Install Python (v3.7.0 for example, as used by this example)
 2. Clone the repository
 3. Install flask: `pip install Flask`
 4. Install midtrans: `pip install midtransclient`
@@ -18,7 +18,7 @@ Midtrans Snap with Flask (Python). To start:
 
 > Or replace step 3 & 4 by `pipenv install`, if you are using pipenv.
 
-The app will run at port 5000.
+The app will run at port 5000. Visit this url on your browser: `http://localhost:5000`
 
 ## Run With Docker
 > required: Docker installed.

@@ -1,4 +1,4 @@
-from python:3.6-alpine
+from python:3.7-alpine
 LABEL name "midflask"
 
 # Create app directory
