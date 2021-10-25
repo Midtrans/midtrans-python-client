@@ -21,8 +21,8 @@ test_req = pkg_req + [
 setup(
     name="midtransclient",
     version="1.3.0",
-    author="Rizda Prasetya",
-    author_email="rizda.prasetya@midtrans.com",
+    author="Midtrans - Integration Support Team",
+    author_email="support@midtrans.com",
     license='MIT',
     description="Official Midtrans Payment API Client",
     long_description=long_description,
