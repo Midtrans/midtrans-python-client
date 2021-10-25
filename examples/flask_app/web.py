@@ -8,8 +8,8 @@ from midtransclient import Snap, CoreApi
 
 # Set Your server key
 # You can find it in Merchant Portal -> Settings -> Access keys
-SERVER_KEY = 'YOUR_SERVER_KEY'
-CLIENT_KEY = 'YOUR_CLIENT_KEY'
+SERVER_KEY = 'SB-Mid-server-GwUP_WGbJPXsDzsNEBRs8IYA'
+CLIENT_KEY = 'SB-Mid-client-61XuGAwQ8Bj8LxSS'
 
 app = Flask(__name__)
 

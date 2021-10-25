@@ -1,5 +1,4 @@
 import pytest
-from .config import *
 from .helpers import is_str
 from .context import HttpClient
 import datetime
@@ -17,7 +16,7 @@ def test_has_request_method():
 def test_can_raw_request_to_snap():
     http_client = HttpClient()
     response_dict, response_object = http_client.request(method='post',
-        server_key=USED_SERVER_KEY,
+        server_key='SB-Mid-server-GwUP_WGbJPXsDzsNEBRs8IYA',
         request_url='https://app.sandbox.midtrans.com/snap/v1/transactions',
         parameters=generate_param_min())
     assert isinstance(response_dict, dict)
