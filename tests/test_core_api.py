@@ -54,14 +54,15 @@ def test_core_api_card_register():
     SAVED_CC_TOKEN = response['saved_token_id']
     assert is_str(response['saved_token_id'])
 
-def test_core_api_card_point_inquiry_fail_402():
+def test_core_api_card_point_inquiry_valid_bni_card():
     core = generate_core_api_instance()
     try:
         response = core.card_point_inquiry(CC_TOKEN)
     except Exception as e:
         err = e
-    assert 'MidtransAPIError' in err.__class__.__name__
-    assert '402' in err.message
+    assert is_str(response['status_message'])
+    assert 'Success' in response['status_message']
+    assert is_str(response['point_balance_amount'])
 
 
 def test_core_api_charge_cc_simple():
