@@ -1,4 +1,5 @@
 import pytest
+from .config import USED_SERVER_KEY, USED_CLIENT_KEY
 from .helpers import is_str
 from .context import midtransclient
 import datetime
@@ -120,8 +121,8 @@ def test_snap_create_transaction_min_with_custom_headers_via_setter():
 # ======== HELPER FUNCTIONS BELOW ======== #
 def generate_snap_instance():
     snap = midtransclient.Snap(is_production=False,
-        server_key='SB-Mid-server-GwUP_WGbJPXsDzsNEBRs8IYA',
-        client_key='SB-Mid-client-61XuGAwQ8Bj8LxSS')
+        server_key=USED_SERVER_KEY,
+        client_key=USED_CLIENT_KEY)
     return snap
 
 def generate_param_min():
