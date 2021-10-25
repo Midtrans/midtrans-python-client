@@ -4,15 +4,20 @@
 
 - If from scratch, using `pipenv`
 	- Install pipenv `pip install pipenv` or `pip3 install pipenv`
+		- If fail, you may need to prefix the command with `sudo `
 	- CD to project directory
 	- Install using pipenv `pipenv install`
+		- If fail, you may need to specify which python bin file by `pipenv install --python /usr/bin/python3`. (Run `which python` or `which python3` to know the file path)
 	- Activate and enter python env for current folder `pipenv shell`, now you are inside python env
 	- Install project as local package `pip install -e .`
 - Make your code changes
-- Increase `version` value on `./setup.py` file
+- Increase `version` value on:
+	- `./setup.py` file
+	- `./midtransclient/__init__.py` file
 - To install the package locally with a symlink `pip install -e .`
 - To run test, run `pytest`
 	- To run specific test, e.g: `pytest -k "test_core_api_charge_fail_401"`
+	- If fail, you may need to install pytest first `pip install pytest`
 - To update https://pypi.org repo, run these on terminal:
 ```bash
 # install setuptools & wheel
