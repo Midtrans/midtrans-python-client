@@ -1,7 +1,15 @@
-import setuptools
+"""A setuptools based setup module.
+Based on: https://github.com/pypa/sampleproject/blob/90d44abe361688aba5a189e661423863b34f5208/setup.py
+"""
 
-with open("README.md", "r", encoding='utf-8') as fh:
-    long_description = fh.read()
+# Always prefer setuptools over distutils
+from setuptools import setup, find_packages
+import pathlib
+
+here = pathlib.Path(__file__).parent.resolve()
+
+# Get the long description from the README file
+long_description = (here / 'README.md').read_text(encoding='utf-8')
 
 pkg_req = [
     'requests>=2.25.0'
@@ -10,7 +18,7 @@ test_req = pkg_req + [
     'pytest>=3.0.6'
 ]
 
-setuptools.setup(
+setup(
     name="midtransclient",
     version="1.3.0",
     author="Rizda Prasetya",
