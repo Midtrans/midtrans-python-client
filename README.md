@@ -1,7 +1,6 @@
 Midtrans Client - Python
 ===============
 
-[![Build Status](https://travis-ci.org/rizdaprasetya/midtrans-python-client.svg?branch=master)](https://travis-ci.org/rizdaprasetya/midtrans-python-client)
 [![PyPI version](https://badge.fury.io/py/midtransclient.svg)](https://badge.fury.io/py/midtransclient)
 [![Downloads](https://pepy.tech/badge/midtransclient/month)](https://pepy.tech/project/midtransclient)
 [![Downloads](https://pepy.tech/badge/midtransclient)](https://pepy.tech/project/midtransclient)
