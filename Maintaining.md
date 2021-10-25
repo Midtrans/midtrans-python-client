@@ -31,11 +31,12 @@ python -m pip install --upgrade twine
 
 # upload to pypi / pip repository
 # you will be asked for username and password for https://pypi.org account
-twine upload dist/*
+twine upload dist/* --skip-existing
 
 # To upload to test pypi use this instead
-# twine upload --repository-url https://test.pypi.org/legacy/ dist/*;
+# twine upload --repository-url https://test.pypi.org/legacy/ dist/* --skip-existing;
 ```
+	- if fail to upload, clean up all files within your `./dist` folder, then re-try the above commands
 
 ## Dev & Test via Docker Compose
 
