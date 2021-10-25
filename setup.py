@@ -28,7 +28,7 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/midtrans/midtrans-python-client/",
-    packages=setuptools.find_packages(),
+    packages=find_packages(),
     classifiers=[
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
