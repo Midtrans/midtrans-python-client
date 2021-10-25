@@ -1,5 +1,13 @@
 import midtransclient
-# initialize snap client object
+# This is just for very basic implementation reference, in production, you should validate the incoming requests and implement your backend more securely.
+# Please refer to this docs for snap popup:
+# https://docs.midtrans.com/en/snap/integration-guide?id=integration-steps-overview
+
+# Please refer to this docs for snap-redirect:
+# https://docs.midtrans.com/en/snap/integration-guide?id=alternative-way-to-display-snap-payment-page-via-redirect
+
+# Initialize snap client object
+# You can find it in Merchant Portal -> Settings -> Access keys
 snap = midtransclient.Snap(
     is_production=False,
     server_key='YOUR_SERVER_KEY',
@@ -108,7 +116,7 @@ param = {
         "finish": "https://demo.midtrans.com"
     },
     "expiry": {
-        "start_time": "2020-12-20 18:11:08 +0700",
+        "start_time": "2025-12-20 18:11:08 +0700",
         "unit": "minute",
         "duration": 9000
     },

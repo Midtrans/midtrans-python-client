@@ -10,9 +10,11 @@ class Snap:
     def __init__(self, 
             is_production=False,
             server_key='',
-            client_key=''):
+            client_key='',
+            custom_headers=dict(),
+            proxies=dict()):
 
-        self.api_config = ApiConfig(is_production,server_key,client_key)
+        self.api_config = ApiConfig(is_production,server_key,client_key,custom_headers,proxies)
         self.http_client = HttpClient()
         self.transactions = Transactions(self)
 
@@ -38,7 +40,9 @@ class Snap:
             'post',
             self.api_config.server_key,
             api_url,
-            parameters)
+            parameters,
+            self.api_config.custom_headers,
+            self.api_config.proxies)
         return response_dict
 
     def create_transaction_token(self,parameters=dict()):

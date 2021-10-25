@@ -21,7 +21,7 @@
         <label>Expiration (MM/YYYY)</label>
         <input class="card-expiry-month" value="12" placeholder="MM" size="2" type="text" />
         <span> / </span>
-        <input class="card-expiry-year" value="2020" placeholder="YYYY" size="4" type="text" />
+        <input class="card-expiry-year" value="2025" placeholder="YYYY" size="4" type="text" />
       </p>
       <p>
         <label>CVV</label>
@@ -61,7 +61,7 @@
   </code>
 
   <hr>
-  <small>Check `app.js` file, section `Using Core API - Credit Card` for the backend implementation</small>
+  <small>Check `web.py` file, section `Using Core API - Credit Card` for the backend implementation</small>
 
   <!-- Import MidtransNew3ds library -->
   <!-- TODO change data-environment to `production` for Production mode -->
@@ -91,7 +91,7 @@
         onSuccess: function(response){
           // success to get card token
           // [2] Send AJAX to let backend charge the card using the card token_id
-          // Check backend implementation on `app.js` file, section `[2]`
+          // Check backend implementation on `web.py` file, section `[2]`
           fetch("/charge_core_api_ajax", {
             method : "POST",
             body: JSON.stringify({ 
@@ -147,7 +147,7 @@
         
         if (responseObj.transaction_id){
           // [4] Inform the result to backend update DB status and verify to Midtrans
-          // Check backend implementation on `app.js` file, section `[4]`
+          // Check backend implementation on `web.py` file, section `[4]`
           fetch('/check_transaction_status', {
             method : "POST",
             body: JSON.stringify({ "transaction_id" : responseObj.transaction_id }),

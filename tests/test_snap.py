@@ -1,4 +1,5 @@
 import pytest
+from .config import USED_SERVER_KEY, USED_CLIENT_KEY
 from .helpers import is_str
 from .context import midtransclient
 import datetime
@@ -105,11 +106,23 @@ def test_snap_exception_MidtransAPIError():
     assert isinstance(err.api_response_dict, dict)
     assert isinstance(err.http_status_code,int)
 
+def test_snap_create_transaction_min_with_custom_headers_via_setter():
+    snap = generate_snap_instance()
+    snap.api_config.custom_headers = {
+        'X-Override-Notification':'https://example.org'
+    }
+    param = generate_param_min()
+    param['transaction_details']['order_id'] = reused_order_id
+    transaction = snap.create_transaction(param)
+    assert isinstance(transaction, dict)
+    assert is_str(transaction['token'])
+    assert is_str(transaction['redirect_url'])
+
 # ======== HELPER FUNCTIONS BELOW ======== #
 def generate_snap_instance():
     snap = midtransclient.Snap(is_production=False,
-        server_key='SB-Mid-server-GwUP_WGbJPXsDzsNEBRs8IYA',
-        client_key='SB-Mid-client-61XuGAwQ8Bj8LxSS')
+        server_key=USED_SERVER_KEY,
+        client_key=USED_CLIENT_KEY)
     return snap
 
 def generate_param_min():
@@ -211,7 +224,7 @@ def generate_param_max():
             "finish": "https://demo.midtrans.com"
         },
         "expiry": {
-            "start_time": "2020-12-20 18:11:08 +0700",
+            "start_time": "2030-12-20 18:11:08 +0700",
             "unit": "minutes",
             "duration": 1
         },

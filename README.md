@@ -380,10 +380,22 @@ expire_response = api_client.transactions.expire('YOUR_ORDER_ID OR TRANSACTION_I
 ```python
 # refund a transaction (not all payment channel allow refund via API)
 param = {
+    "refund_key": "order1-ref1",
     "amount": 5000,
     "reason": "Item out of stock"
 }
 refund_response = api_client.transactions.refund('YOUR_ORDER_ID OR TRANSACTION_ID',param)
+```
+
+#### Refund Transaction with Direct Refund
+```python
+# refund a transaction (not all payment channel allow refund via API) with Direct Refund
+param = {
+    "refund_key": "order1-ref1",
+    "amount": 5000,
+    "reason": "Item out of stock"
+}
+refund_response = api_client.transactions.refundDirect('YOUR_ORDER_ID OR TRANSACTION_ID',param)
 ```
 
 ## 3. Handling Error / Exception
@@ -400,12 +412,75 @@ err.api_response_dict
 err.http_status_code
 err.raw_http_client_data
 ```
+## 4. Advanced Usage
 
-## 4. Examples
+### Custom Http Headers
+
+You can set custom headers via the value of this `<api-client-instance>.api_config.custom_headers` dict, e.g:
+```python
+# Create Snap API instance
+snap = midtransclient.Snap(
+    is_production=False,
+    server_key='YOUR_SERVER_KEY',
+    client_key='YOUR_CLIENT_KEY'
+)
+
+# set custom HTTP header for every request from this instance
+snap.api_config.custom_headers = {
+    'my-custom-header':'my value',
+    'x-override-notification':'https://example.org',
+}
+```
+
+### Override/Append Http Notification Url
+As [described in API docs](https://snap-docs.midtrans.com/#override-notification-url), merchant can opt to change or add custom notification urls on every transaction. It can be achieved by adding additional HTTP headers into charge request.
+
+This can be achived by:
+```python
+# create instance of api client
+snap = midtransclient.Snap(
+    is_production=False,
+    server_key='YOUR_SERVER_KEY',
+    client_key='YOUR_CLIENT_KEY'
+)
+# set custom HTTP header that will be used by Midtrans API to override notification url:
+snap.api_config.custom_headers = {
+    'x-override-notification':'https://example.org',
+}
+```
+
+or append notification:
+```python
+snap.api_config.custom_headers = {
+    'x-append-notification':'https://example.org',
+}
+```
+
+### Custom Http Proxy
+
+You can set custom http(s) proxies via the value of this `<api-client-instance>.api_config.proxies` dict, e.g:
+
+```python
+# create instance of api client
+snap = midtransclient.Snap(
+    is_production=False,
+    server_key='YOUR_SERVER_KEY',
+    client_key='YOUR_CLIENT_KEY'
+)
+
+snap.api_config.proxies = {
+  'http': 'http://10.10.1.10:3128',
+  'https': 'http://10.10.1.10:1080',
+}
+```
+
+Under the hood this API wrapper is using [Requests](https://github.com/requests/requests) as http client. You can further [learn about proxies on its documentation](https://requests.readthedocs.io/en/master/user/advanced/#proxies)
+
+## Examples
 Examples are available on [/examples](/examples) folder.
 There are:
 - [Core Api examples](/examples/core_api)
-- [Snap examples](/examples/snap_api)
+- [Snap examples](/examples/snap)
 - [Flask App examples](/examples/flask_app) that implement Snap & Core Api
 
 #### Get help

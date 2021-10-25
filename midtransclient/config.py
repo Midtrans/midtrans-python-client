@@ -12,10 +12,14 @@ class ApiConfig:
     def __init__(self, 
             is_production=False,
             server_key='',
-            client_key=''):
+            client_key='',
+            custom_headers=dict(),
+            proxies=dict()):
         self.is_production = is_production
         self.server_key = server_key
         self.client_key = client_key
+        self.custom_headers = custom_headers
+        self.proxies = proxies
 
     def get_core_api_base_url(self):
         if self.is_production: 
@@ -55,7 +59,25 @@ class ApiConfig:
     def client_key(self, new_value):
         self.__client_key = new_value
 
+    @property
+    def custom_headers(self):
+        return self.__custom_headers
+
+    @custom_headers.setter
+    def custom_headers(self, new_value):
+        self.__custom_headers = new_value
+
+    @property
+    def proxies(self):
+        return self.__proxies
+
+    @proxies.setter
+    def proxies(self, new_value):
+        self.__proxies = new_value
+
     def __repr__(self):
-        return ("<ApiConfig({0},{1},{2})>".format(self.is_production,
+        return ("<ApiConfig({0},{1},{2},{3},{4})>".format(self.is_production,
             self.server_key,
-            self.client_key))
+            self.client_key,
+            self.custom_headers,
+            self.proxies))

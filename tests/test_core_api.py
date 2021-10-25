@@ -1,12 +1,10 @@
 import pytest
+from .config import USED_SERVER_KEY, USED_CLIENT_KEY
 from .helpers import is_str
 from .context import midtransclient
 import datetime
 import json
 from pprint import pprint
-
-USED_SERVER_KEY='SB-Mid-server-GwUP_WGbJPXsDzsNEBRs8IYA'
-USED_CLIENT_KEY='SB-Mid-client-61XuGAwQ8Bj8LxSS'
 
 REUSED_ORDER_ID = [
     "py-midtransclient-test1-"+str(datetime.datetime.now()).replace(" ", "").replace(":", ""),
@@ -29,7 +27,7 @@ def test_core_api_card_token():
     params = {
         'card_number': '5264 2210 3887 4659',
         'card_exp_month': '12',
-        'card_exp_year': '2020',
+        'card_exp_year': '2030',
         'card_cvv': '123',
         'client_key': core.api_config.client_key,
     }
@@ -45,7 +43,7 @@ def test_core_api_card_register():
     params = {
         'card_number': '4811 1111 1111 1114',
         'card_exp_month': '12',
-        'card_exp_year': '2020',
+        'card_exp_year': '2030',
         'card_cvv': '123',
         'client_key': core.api_config.client_key,
     }
@@ -56,14 +54,15 @@ def test_core_api_card_register():
     SAVED_CC_TOKEN = response['saved_token_id']
     assert is_str(response['saved_token_id'])
 
-def test_core_api_card_point_inquiry_fail_402():
+def test_core_api_card_point_inquiry_valid_bni_card():
     core = generate_core_api_instance()
     try:
         response = core.card_point_inquiry(CC_TOKEN)
     except Exception as e:
         err = e
-    assert 'MidtransAPIError' in err.__class__.__name__
-    assert '402' in err.message
+    assert is_str(response['status_message'])
+    assert 'Success' in response['status_message']
+    assert is_str(response['point_balance_amount'])
 
 
 def test_core_api_charge_cc_simple():
@@ -163,12 +162,28 @@ def test_core_api_cancel():
 def test_core_api_refund_fail_not_yet_settlement():
     core = generate_core_api_instance()
     params = {
+        "refund_key": "order1-ref1",
         "amount": 5000,
         "reason": "for some reason"
     }
     err = ''
     try:
         response = core.transactions.refund(REUSED_ORDER_ID[2],params)
+    except Exception as e:
+        err = e
+    assert 'MidtransAPIError' in err.__class__.__name__
+    assert '412' in err.message
+
+def test_core_api_direct_refund_fail_not_yet_settlement():
+    core = generate_core_api_instance()
+    params = {
+        "refund_key": "order1-ref1",
+        "amount": 5000,
+        "reason": "for some reason"
+    }
+    err = ''
+    try:
+        response = core.transactions.refundDirect(REUSED_ORDER_ID[2],params)
     except Exception as e:
         err = e
     assert 'MidtransAPIError' in err.__class__.__name__
@@ -226,7 +241,7 @@ def test_core_api_status_server_key_change_via_setter():
 
 def test_core_api_charge_fail_401():
     core = generate_core_api_instance()
-    core.api_config.server_key=''
+    core.api_config.server_key='invalidkey'
     parameters = generate_param_min()
     err = ''
     try:
@@ -235,7 +250,7 @@ def test_core_api_charge_fail_401():
         err = e
     assert 'MidtransAPIError' in err.__class__.__name__
     assert '401' in err.message
-    assert 'unauthorized' in err.message
+    assert 'authorized' in err.message
 
 def test_core_api_charge_fail_empty_param():
     core = generate_core_api_instance()
