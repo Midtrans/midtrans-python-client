@@ -4,11 +4,26 @@ import datetime
 
 # Initialize core api client object
 # You can find it in Merchant Portal -> Settings -> Access keys
-subscription = midtransclient.Subscription(
+core_api = midtransclient.CoreApi(
     is_production=False,
-    server_key='YOUR_SERVER_KEY',
-    client_key='YOUR_CLIENT_KEY'
+    server_key='SB-Mid-server-1isH_dlGSg6uy.I7NpeNK53i',
+    client_key='SB-Mid-client-yrY4WjUNOnhOyIIH'
 )
+
+# To use API subscription for credit card, you should first obtain the 1 click token
+# Refer to docs: https://docs.midtrans.com/en/core-api/advanced-features?id=recurring-transaction-with-subscriptions-api
+
+# You will receive saved_token_id after complete 3ds authentication (it also available in the JSON of HTTP notification)
+# Refer to docs: https://docs.midtrans.com/en/core-api/advanced-features?id=sample-3ds-authenticate-json-response-for-the-first-transaction
+# {
+#   ...
+#   "card_type": "credit",
+#   "saved_token_id":"481111xDUgxnnredRMAXuklkvAON1114",
+#   "saved_token_id_expired_at": "2022-12-31 07:00:00",
+#   ...
+# }
+# Sample saved token id for testing purpose
+SAVED_TOKEN_ID = '436502qFfqfAQKScMtPRPdZDOaeg7199'
 
 # prepare subscription parameter ( refer to: https://api-docs.midtrans.com/#create-subscription )
 param = {
@@ -16,7 +31,7 @@ param = {
     "amount": "100000",
     "currency": "IDR",
     "payment_type": "credit_card",
-    "token": "436502qFfqfAQKScMtPRPdZDOaeg7199",
+    "token": SAVED_TOKEN_ID,
     "schedule": {
       "interval": 1,
       "interval_unit": "day",
@@ -34,9 +49,9 @@ param = {
 }
 
 # create subscription
-create_subscription = subscription.create(param)
+create_subscription_response = core_api.create_subscription(param)
 print('create_subscription_response:')
-print(create_subscription)
+print(create_subscription_response)
 
 # subscription_response is dictionary representation of API JSON response
 # sample:
@@ -71,27 +86,33 @@ print(create_subscription)
 #   }
 # }
 
-subscription_id = create_subscription['id']
+subscription_id_response = create_subscription_response['id']
 
 # get subscription by subscription_id
-get_subscription = subscription.get(subscription_id)
+get_subscription_response = core_api.get_subscription(subscription_id_response)
 print('get_subscription_response:')
-print(get_subscription)
-
-# disable subscription by subscription_id
-disable_subscription = subscription.disable(subscription_id)
-print('disable_subscription_response:')
-print(disable_subscription)
+print(get_subscription_response)
 
 # enable subscription by subscription_id
-enable_subscription = subscription.enable(subscription_id)
+enable_subscription_response = core_api.enable_subscription(subscription_id_response)
 print('enable_subscription_response:')
-print(enable_subscription)
+print(enable_subscription_response)
 
 # update subscription by subscription_id
 update_param = {
     "name": "SUBS-PY-UPDATE",
+    "amount": "100000",
+    "currency": "IDR",
+    "token": SAVED_TOKEN_ID,
+    "schedule": {
+      "interval": 1
+    }
 }
-update_subscription = subscription.update(subscription_id, update_param)
+update_subscription_response = core_api.update_subscription(subscription_id_response, update_param)
 print('update_subscription_response:')
-print(update_subscription)
+print(update_subscription_response)
+
+# disable subscription by subscription_id
+disable_subscription_response = core_api.disable_subscription(subscription_id_response)
+print('disable_subscription_response:')
+print(disable_subscription_response)

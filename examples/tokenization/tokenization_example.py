@@ -4,19 +4,10 @@ import datetime
 
 # Initialize core api client object
 # You can find it in Merchant Portal -> Settings -> Access keys
-USED_SERVER_KEY = 'YOUR_SERVER_KEY'
-USED_CLIENT_KEY = 'YOUR_CLIENT_KEY'
-
-tokenization = midtransclient.Tokenization(
-    is_production=False,
-    server_key=USED_SERVER_KEY,
-    client_key=USED_CLIENT_KEY
-)
-
 core_api = midtransclient.CoreApi(
     is_production=False,
-    server_key=USED_SERVER_KEY,
-    client_key=USED_CLIENT_KEY
+    server_key='SB-Mid-server-1isH_dlGSg6uy.I7NpeNK53i',
+    client_key='SB-Mid-client-yrY4WjUNOnhOyIIH'
 )
 
 # prepare parameter ( refer to: https://api-docs.midtrans.com/#create-pay-account )
@@ -30,7 +21,7 @@ param = {
 }
 
 # link payment account
-link_payment_account = tokenization.link_account(param)
+link_payment_account = core_api.link_payment_account(param)
 print('link_payment_account_response:')
 print(link_payment_account)
 
@@ -66,7 +57,7 @@ print(link_payment_account)
 
 active_account_id = "6975fc98-8d44-490d-b50a-28d2810d6856"
 # get payment account by account_id
-get_payment_account = tokenization.get_account(active_account_id)
+get_payment_account = core_api.get_payment_account(active_account_id)
 print('get_payment_account_response:')
 print(get_payment_account)
 # sample
@@ -128,7 +119,7 @@ print(charge)
 #     "id": "19eda9e4-37c9-4bfd-abb2-c60bb3a91084"
 # }
 try:
-    unlink_payment_account = tokenization.unlink_account(link_payment_account['account_id'])
+    unlink_payment_account = core_api.unlink_payment_account(link_payment_account['account_id'])
     print('unlink_response:')
     print(unlink_payment_account)
 except Exception as e:
