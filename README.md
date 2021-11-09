@@ -63,6 +63,24 @@ snap = midtransclient.Snap(
 )
 ```
 
+```python
+# Create Subscription API instance
+subscription = midtransclient.Subscription(
+    is_production=False,
+    server_key='YOUR_SERVER_KEY',
+    client_key='YOUR_CLIENT_KEY'
+)
+```
+
+```python
+# Create Tokenization API instance
+tokenization = midtransclient.Tokenization(
+    is_production=False,
+    server_key='YOUR_SERVER_KEY',
+    client_key='YOUR_CLIENT_KEY'
+)
+```
+
 You can also re-set config using `Snap.api_config.set( ... )`
 example:
 
@@ -303,6 +321,88 @@ The credit card charge result may contains `redirect_url` for 3DS authentication
 For full example on Credit Card 3DS transaction refer to:
 - [Flask App examples](/examples/flask_app) that implement Snap & Core Api
 
+### 2.2.D Subscription API
+You can see some Subscription API examples [here](examples/subscription).
+
+```python
+# Create Subscription API instance
+subscription = midtransclient.Subscription(
+    is_production=False,
+    server_key='YOUR_SERVER_KEY',
+    client_key='YOUR_CLIENT_KEY'
+)
+# Build parameter
+param = {
+    "name": "SUBSCRIPTION-STARTER-1",
+    "amount": "100000",
+    "currency": "IDR",
+    "payment_type": "credit_card",
+    "token": "436502qFfqfAQKScMtPRPdZDOaeg7199",
+    "schedule": {
+      "interval": 1,
+      "interval_unit": "month",
+      "max_interval": 3,
+      "start_time": "2021-10-01 07:25:01 +0700"
+    },
+    "metadata": {
+      "description": "Recurring payment for STARTER 1"
+    },
+    "customer_details": {
+      "first_name": "John A",
+      "last_name": "Doe A",
+      "email": "johndoe@email.com",
+      "phone": "+62812345678"
+    }
+}
+create_subscription = subscription.create(param)
+
+subscription_id = create_subscription['id']
+# get subscription by subscription_id
+get_subscription = subscription.get(subscription_id)
+
+# disable subscription by subscription_id
+disable_subscription = subscription.disable(subscription_id)
+
+# enable subscription by subscription_id
+enable_subscription = subscription.enable(subscription_id)
+
+# update subscription by subscription_id
+update_param = {
+    "name": "SUBSCRIPTION-STARTER-1-UPDATE",
+}
+update_subscription = subscription.update(subscription_id, update_param)
+```
+
+### 2.2.E Tokenization API
+You can see some Tokenization API examples [here](examples/tokenization).
+
+```python
+# Create Tokenization API instance
+tokenization = midtransclient.Tokenization(
+    is_production=False,
+    server_key='YOUR_SERVER_KEY',
+    client_key='YOUR_CLIENT_KEY'
+)
+# Build parameter
+param = {
+  "payment_type": "gopay",
+  "gopay_partner": {
+    "phone_number": "81234567891",
+    "country_code": "62",
+    "redirect_url": "https://midtrans.com"
+  }
+}
+
+# link payment account
+link_payment_account = tokenization.link_account(param)
+
+# get payment account
+get_payment_account = tokenization.get_account(active_account_id)
+
+# unlink account
+unlink_payment_account = tokenization.unlink_account(active_account_id)
+```
+
 ### 2.3 Handle HTTP Notification
 
 > **IMPORTANT NOTE**: To update transaction status on your backend/database, **DO NOT** solely rely on frontend callbacks! For security reason to make sure the status is authentically coming from Midtrans, only update transaction status based on HTTP Notification or API Get Status.
@@ -479,6 +579,8 @@ Under the hood this API wrapper is using [Requests](https://github.com/requests/
 Examples are available on [/examples](/examples) folder.
 There are:
 - [Core Api examples](/examples/core_api)
+- [Subscription examples](/examples/subscription)
+- [Tokenization examples](/examples/tokenization)
 - [Snap examples](/examples/snap)
 - [Flask App examples](/examples/flask_app) that implement Snap & Core Api
 
