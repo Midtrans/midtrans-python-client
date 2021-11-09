@@ -6,8 +6,8 @@ import datetime
 # You can find it in Merchant Portal -> Settings -> Access keys
 core_api = midtransclient.CoreApi(
     is_production=False,
-    server_key='SB-Mid-server-1isH_dlGSg6uy.I7NpeNK53i',
-    client_key='SB-Mid-client-yrY4WjUNOnhOyIIH'
+    server_key='YOUR_SERVER_KEY',
+    client_key='YOUR_CLIENT_KEY'
 )
 
 # To use API subscription for gopay, you should first link your customer gopay account with gopay tokenization

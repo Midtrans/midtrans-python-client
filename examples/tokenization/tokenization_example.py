@@ -6,8 +6,8 @@ import datetime
 # You can find it in Merchant Portal -> Settings -> Access keys
 core_api = midtransclient.CoreApi(
     is_production=False,
-    server_key='SB-Mid-server-1isH_dlGSg6uy.I7NpeNK53i',
-    client_key='SB-Mid-client-yrY4WjUNOnhOyIIH'
+    server_key='YOUR_SERVER_KEY',
+    client_key='YOUR_CLIENT_KEY'
 )
 
 # prepare parameter ( refer to: https://api-docs.midtrans.com/#create-pay-account )
@@ -21,9 +21,9 @@ param = {
 }
 
 # link payment account
-link_payment_account = core_api.link_payment_account(param)
+link_payment_account_response = core_api.link_payment_account(param)
 print('link_payment_account_response:')
-print(link_payment_account)
+print(link_payment_account_response)
 
 # link_payment_account_response is dictionary representation of API JSON response
 # sample:
@@ -55,11 +55,12 @@ print(link_payment_account)
 # }
 # for the first link, the account status is PENDING, you must activate it by accessing one of the URLs on the actions object
 
+# Sample active account id for testing purpose
 active_account_id = "6975fc98-8d44-490d-b50a-28d2810d6856"
 # get payment account by account_id
-get_payment_account = core_api.get_payment_account(active_account_id)
+get_payment_account_response = core_api.get_payment_account(active_account_id)
 print('get_payment_account_response:')
-print(get_payment_account)
+print(get_payment_account_response)
 # sample
 # {
 #     "status_code": "200",
@@ -105,9 +106,9 @@ params = {
     "order_id": "GOPAY-LINK-"+datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
   }
 }
-charge = core_api.charge(params)
+charge_response = core_api.charge(params)
 print('charge_response:')
-print(charge)
+print(charge_response)
 
 
 # unlink payment account by account_id
@@ -119,9 +120,9 @@ print(charge)
 #     "id": "19eda9e4-37c9-4bfd-abb2-c60bb3a91084"
 # }
 try:
-    unlink_payment_account = core_api.unlink_payment_account(link_payment_account['account_id'])
-    print('unlink_response:')
-    print(unlink_payment_account)
+    unlink_payment_account_response = core_api.unlink_payment_account(link_payment_account['account_id'])
+    print('unlink_payment_account_response:')
+    print(unlink_payment_account_response)
 except Exception as e:
     print('unlink_failure_response:')
     print(e)
