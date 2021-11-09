@@ -11,14 +11,14 @@ SUBSCRIPTION_ID = ''
 def test_subscription_class():
     subscription = generate_subscription_instance()
     methods = dir(subscription)
-    assert "create" in methods
+    assert "create_subscription" in methods
     assert is_str(subscription.api_config.server_key)
     assert is_str(subscription.api_config.client_key)
 
 def test_subscription_create_subscription():
     subscription = generate_subscription_instance()
     parameters = generate_param()
-    response = subscription.create(parameters)
+    response = subscription.create_subscription(parameters)
     global SUBSCRIPTION_ID
     SUBSCRIPTION_ID = response['id']
     assert isinstance(response, dict)
@@ -30,7 +30,7 @@ def test_subscription_fail_empty_param():
     parameters = None
     err = ''
     try:
-        response = subscription.create(parameters)
+        response = subscription.create_subscription(parameters)
     except Exception as e:
         err = e
     assert 'MidtransAPIError' in err.__class__.__name__
@@ -43,7 +43,7 @@ def test_subscription_fail_zero_amount():
     parameters['amount'] = 0
     err = ''
     try:
-        response = subscription.create(parameters)
+        response = subscription.create_subscription(parameters)
     except Exception as e:
         err = e
     assert 'MidtransAPIError' in err.__class__.__name__
@@ -53,7 +53,7 @@ def test_subscription_fail_zero_amount():
 def test_subscription_get_subscription():
     subscription = generate_subscription_instance()
     parameters = generate_param()
-    response = subscription.get(SUBSCRIPTION_ID)
+    response = subscription.get_subscription(SUBSCRIPTION_ID)
     assert isinstance(response, dict)
     assert response['id'] == SUBSCRIPTION_ID
     assert response['status'] == 'active'
@@ -62,7 +62,7 @@ def test_subscription_get_subscription_not_found():
     subscription = generate_subscription_instance()
     err = ''
     try:
-        response = subscription.get('123')
+        response = subscription.get_subscription('123')
     except Exception as e:
         err = e
     assert 'MidtransAPIError' in err.__class__.__name__
@@ -71,36 +71,38 @@ def test_subscription_get_subscription_not_found():
 
 def test_subscription_disable_subscription():
     subscription = generate_subscription_instance()
-    response = subscription.disable(SUBSCRIPTION_ID)
+    response = subscription.disable_subscription(SUBSCRIPTION_ID)
     assert isinstance(response, dict)
     assert response['status_message'] == 'Subscription is updated.'
-    get_subscription = subscription.get(SUBSCRIPTION_ID)
+    get_subscription = subscription.get_subscription(SUBSCRIPTION_ID)
     assert get_subscription['id'] == SUBSCRIPTION_ID
     assert get_subscription['status'] == 'inactive'
 
 def test_subscription_enable_subscription():
     subscription = generate_subscription_instance()
-    response = subscription.enable(SUBSCRIPTION_ID)
+    response = subscription.enable_subscription(SUBSCRIPTION_ID)
     assert isinstance(response, dict)
     assert response['status_message'] == 'Subscription is updated.'
-    get_subscription = subscription.get(SUBSCRIPTION_ID)
+    get_subscription = subscription.get_subscription(SUBSCRIPTION_ID)
     assert get_subscription['id'] == SUBSCRIPTION_ID
     assert get_subscription['status'] == 'active'
+    # disable subscription to prevent Core API continue to execute subscription
+    response = subscription.disable_subscription(SUBSCRIPTION_ID)
 
 def test_subscription_update_subscription():
     subscription = generate_subscription_instance()
     parameters = generate_param()
     parameters['metadata']['description'] = 'update recurring payment to ABC'
-    response = subscription.update(SUBSCRIPTION_ID,parameters)
+    response = subscription.update_subscription(SUBSCRIPTION_ID,parameters)
     assert isinstance(response, dict)
     assert response['status_message'] == 'Subscription is updated.'
-    get_subscription = subscription.get(SUBSCRIPTION_ID)
+    get_subscription = subscription.get_subscription(SUBSCRIPTION_ID)
     assert get_subscription['id'] == SUBSCRIPTION_ID
     assert get_subscription['metadata']['description'] == 'update recurring payment to ABC'
 
 # ======== HELPER FUNCTIONS BELOW ======== #
 def generate_subscription_instance():
-    subscription = midtransclient.Subscription(is_production=False,
+    subscription = midtransclient.CoreApi(is_production=False,
         server_key=USED_SERVER_KEY,
         client_key=USED_CLIENT_KEY)
     return subscription
