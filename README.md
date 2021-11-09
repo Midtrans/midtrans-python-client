@@ -63,24 +63,6 @@ snap = midtransclient.Snap(
 )
 ```
 
-```python
-# Create Subscription API instance
-subscription = midtransclient.Subscription(
-    is_production=False,
-    server_key='YOUR_SERVER_KEY',
-    client_key='YOUR_CLIENT_KEY'
-)
-```
-
-```python
-# Create Tokenization API instance
-tokenization = midtransclient.Tokenization(
-    is_production=False,
-    server_key='YOUR_SERVER_KEY',
-    client_key='YOUR_CLIENT_KEY'
-)
-```
-
 You can also re-set config using `Snap.api_config.set( ... )`
 example:
 
@@ -322,11 +304,11 @@ For full example on Credit Card 3DS transaction refer to:
 - [Flask App examples](/examples/flask_app) that implement Snap & Core Api
 
 ### 2.2.D Subscription API
-You can see some Subscription API examples [here](examples/subscription).
+You can see some Subscription API examples [here](examples/subscription), [Subscription API Docs](https://api-docs.midtrans.com/#subscription-api)
 
 ```python
 # Create Subscription API instance
-subscription = midtransclient.Subscription(
+subscription = midtransclient.CoreApi(
     is_production=False,
     server_key='YOUR_SERVER_KEY',
     client_key='YOUR_CLIENT_KEY'
@@ -354,31 +336,36 @@ param = {
       "phone": "+62812345678"
     }
 }
-create_subscription = subscription.create(param)
+create_subscription_response = subscription.create_subscription(param)
 
-subscription_id = create_subscription['id']
+subscription_id_response = create_subscription_response['id']
 # get subscription by subscription_id
-get_subscription = subscription.get(subscription_id)
+get_subscription = subscription.get_subscription(subscription_id_response)
 
 # disable subscription by subscription_id
-disable_subscription = subscription.disable(subscription_id)
+disable_subscription = subscription.disable_subscription(subscription_id_response)
 
 # enable subscription by subscription_id
-enable_subscription = subscription.enable(subscription_id)
+enable_subscription = subscription.enable_subscription(subscription_id_response)
 
 # update subscription by subscription_id
 update_param = {
     "name": "SUBSCRIPTION-STARTER-1-UPDATE",
+    "amount": "100000",
+    "currency": "IDR",
+    "token": "436502qFfqfAQKScMtPRPdZDOaeg7199",
+    "schedule": {
+      "interval": 1
 }
-update_subscription = subscription.update(subscription_id, update_param)
+update_subscription = subscription.update_subscription(subscription_id_response, update_param)
 ```
 
 ### 2.2.E Tokenization API
-You can see some Tokenization API examples [here](examples/tokenization).
+You can see some Tokenization API examples [here](examples/tokenization), [Tokenization API Docs](https://api-docs.midtrans.com/#gopay-tokenization)
 
 ```python
 # Create Tokenization API instance
-tokenization = midtransclient.Tokenization(
+tokenization = midtransclient.CoreApi(
     is_production=False,
     server_key='YOUR_SERVER_KEY',
     client_key='YOUR_CLIENT_KEY'
@@ -394,13 +381,13 @@ param = {
 }
 
 # link payment account
-link_payment_account = tokenization.link_account(param)
+link_payment_account_response = tokenization.link_payment_account(param)
 
 # get payment account
-get_payment_account = tokenization.get_account(active_account_id)
+get_payment_account_response = tokenization.get_payment_account(active_account_id)
 
 # unlink account
-unlink_payment_account = tokenization.unlink_account(active_account_id)
+unlink_payment_account_response = tokenization.unlink_payment_account(active_account_id)
 ```
 
 ### 2.3 Handle HTTP Notification
