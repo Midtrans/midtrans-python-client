@@ -34,7 +34,7 @@ class CoreApi:
 
         :return: Dictionary from JSON decoded response
         """
-        api_url = self.api_config.get_core_api_base_url()+'/charge'
+        api_url = self.api_config.get_base_url()+'/v2/charge'
 
         response_dict, response_object = self.http_client.request(
             'post',
@@ -53,7 +53,7 @@ class CoreApi:
 
         :return: Dictionary from JSON decoded response
         """
-        api_url = self.api_config.get_core_api_base_url()+'/capture'
+        api_url = self.api_config.get_base_url()+'/v2/capture'
 
         response_dict, response_object = self.http_client.request(
             'post',
@@ -73,7 +73,7 @@ class CoreApi:
 
         :return: Dictionary from JSON decoded response
         """
-        api_url = self.api_config.get_core_api_base_url()+'/card/register'
+        api_url = self.api_config.get_base_url()+'/v2/card/register'
 
         response_dict, response_object = self.http_client.request(
             'get',
@@ -93,7 +93,7 @@ class CoreApi:
 
         :return: Dictionary from JSON decoded response
         """
-        api_url = self.api_config.get_core_api_base_url()+'/token'
+        api_url = self.api_config.get_base_url()+'/v2/token'
 
         response_dict, response_object = self.http_client.request(
             'get',
@@ -113,7 +113,7 @@ class CoreApi:
 
         :return: Dictionary from JSON decoded response
         """
-        api_url = self.api_config.get_core_api_base_url()+'/point_inquiry/'+token_id
+        api_url = self.api_config.get_base_url()+'/v2/point_inquiry/'+token_id
 
         response_dict, response_object = self.http_client.request(
             'get',
