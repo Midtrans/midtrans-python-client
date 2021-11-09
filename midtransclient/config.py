@@ -21,7 +21,7 @@ class ApiConfig:
         self.custom_headers = custom_headers
         self.proxies = proxies
 
-    def get_base_url(self):
+    def get_core_api_base_url(self):
         if self.is_production: 
             return self.CORE_PRODUCTION_BASE_URL
         return self.CORE_SANDBOX_BASE_URL 
