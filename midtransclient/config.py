@@ -4,8 +4,8 @@ class ApiConfig:
     And also API base urls.
     note: client_key is not necessarily required for API call.
     """
-    CORE_SANDBOX_BASE_URL = 'https://api.sandbox.midtrans.com/v2';
-    CORE_PRODUCTION_BASE_URL = 'https://api.midtrans.com/v2';
+    CORE_SANDBOX_BASE_URL = 'https://api.sandbox.midtrans.com';
+    CORE_PRODUCTION_BASE_URL = 'https://api.midtrans.com';
     SNAP_SANDBOX_BASE_URL = 'https://app.sandbox.midtrans.com/snap/v1';
     SNAP_PRODUCTION_BASE_URL = 'https://app.midtrans.com/snap/v1';
 
@@ -21,7 +21,7 @@ class ApiConfig:
         self.custom_headers = custom_headers
         self.proxies = proxies
 
-    def get_core_api_base_url(self):
+    def get_base_url(self):
         if self.is_production: 
             return self.CORE_PRODUCTION_BASE_URL
         return self.CORE_SANDBOX_BASE_URL 
