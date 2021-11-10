@@ -16,7 +16,7 @@ param = {
   "gopay_partner": {
     "phone_number": "81234567891",
     "country_code": "62",
-    "redirect_url": "https://midtrans.com"
+    "redirect_url": "https://mywebstore.com/gopay-linking-finish" #please update with your redirect URL
   }
 }
 
@@ -99,7 +99,7 @@ params = {
   "gopay": {
     "account_id": get_payment_account['account_id'],
     "payment_option_token": get_payment_account['metadata']['payment_options'][0]['token'],
-    "callback_url": "https://midtrans.com"
+    "callback_url": "https://mywebstore.com/gopay-linking-finish"  #please update with your redirect URL
   },
   "transaction_details": {
     "gross_amount": 100000,

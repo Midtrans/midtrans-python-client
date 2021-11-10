@@ -123,7 +123,7 @@ snap = midtransclient.Snap(
     server_key='YOUR_SERVER_KEY',
     client_key='YOUR_CLIENT_KEY'
 )
-# Build API parameter
+# Prepare parameter
 param = {
     "transaction_details": {
         "order_id": "test-transaction-123",
@@ -191,7 +191,7 @@ snap = midtransclient.Snap(
     server_key='YOUR_SERVER_KEY',
     client_key='YOUR_CLIENT_KEY'
 )
-# Build API parameter
+# Prepare parameter
 param = {
     "transaction_details": {
         "order_id": "test-transaction-123",
@@ -277,7 +277,7 @@ core_api = midtransclient.Snap(
     server_key='YOUR_SERVER_KEY',
     client_key='YOUR_CLIENT_KEY'
 )
-# Build API parameter
+# Prepare parameter
 param = {
     "payment_type": "credit_card",
     "transaction_details": {
@@ -306,14 +306,21 @@ For full example on Credit Card 3DS transaction refer to:
 ### 2.2.D Subscription API
 You can see some Subscription API examples [here](examples/subscription), [Subscription API Docs](https://api-docs.midtrans.com/#subscription-api)
 
+Subscription API only support for `Credit Card` and `Gopay`
+
+#### Subscription API for Credit Card
+
+To use subscription API for credit card, you should first obtain the 1 click token, [refer to docs](https://docs.midtrans.com/en/core-api/advanced-features?id=recurring-transaction-with-subscriptions-api)
+You will receive saved_token_id after complete 3ds authentication (it also available in the JSON of HTTP notification) [refer to docs](https://docs.midtrans.com/en/core-api/advanced-features?id=sample-3ds-authenticate-json-response-for-the-first-transaction)
+
 ```python
 # Create Subscription API instance
-subscription = midtransclient.CoreApi(
+core_api = midtransclient.CoreApi(
     is_production=False,
     server_key='YOUR_SERVER_KEY',
     client_key='YOUR_CLIENT_KEY'
 )
-# Build parameter
+# Prepare parameter
 param = {
     "name": "SUBSCRIPTION-STARTER-1",
     "amount": "100000",
@@ -336,17 +343,17 @@ param = {
       "phone": "+62812345678"
     }
 }
-create_subscription_response = subscription.create_subscription(param)
+create_subscription_response = core_api.create_subscription(param)
 
 subscription_id_response = create_subscription_response['id']
 # get subscription by subscription_id
-get_subscription = subscription.get_subscription(subscription_id_response)
+get_subscription_response = core_api.get_subscription(subscription_id_response)
 
 # disable subscription by subscription_id
-disable_subscription = subscription.disable_subscription(subscription_id_response)
+disable_subscription_response = core_api.disable_subscription(subscription_id_response)
 
 # enable subscription by subscription_id
-enable_subscription = subscription.enable_subscription(subscription_id_response)
+enable_subscription_response = core_api.enable_subscription(subscription_id_response)
 
 # update subscription by subscription_id
 update_param = {
@@ -357,37 +364,43 @@ update_param = {
     "schedule": {
       "interval": 1
 }
-update_subscription = subscription.update_subscription(subscription_id_response, update_param)
+update_subscription_response = core_api.update_subscription(subscription_id_response, update_param)
 ```
+
+#### Subscription API for Gopay
+
+To use subscription API for gopay, you should first link your customer gopay account with gopay tokenization API, [refer to docs](https://api-docs.midtrans.com/#gopay-tokenization)
+You will receive gopay payment token with get_payment_account API
+Check Tokenization examples folder (/examples/tokenization)
 
 ### 2.2.E Tokenization API
 You can see some Tokenization API examples [here](examples/tokenization), [Tokenization API Docs](https://api-docs.midtrans.com/#gopay-tokenization)
 
 ```python
 # Create Tokenization API instance
-tokenization = midtransclient.CoreApi(
+core_api = midtransclient.CoreApi(
     is_production=False,
     server_key='YOUR_SERVER_KEY',
     client_key='YOUR_CLIENT_KEY'
 )
-# Build parameter
+# Prepare parameter
 param = {
   "payment_type": "gopay",
   "gopay_partner": {
     "phone_number": "81234567891",
     "country_code": "62",
-    "redirect_url": "https://midtrans.com"
+    "redirect_url": "https://mywebstore.com/gopay-linking-finish" #please update with your redirect URL
   }
 }
 
 # link payment account
-link_payment_account_response = tokenization.link_payment_account(param)
+link_payment_account_response = core_api.link_payment_account(param)
 
 # get payment account
-get_payment_account_response = tokenization.get_payment_account(active_account_id)
+get_payment_account_response = core_api.get_payment_account(active_account_id)
 
 # unlink account
-unlink_payment_account_response = tokenization.unlink_payment_account(active_account_id)
+unlink_payment_account_response = core_api.unlink_payment_account(active_account_id)
 ```
 
 ### 2.3 Handle HTTP Notification

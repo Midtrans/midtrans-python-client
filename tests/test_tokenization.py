@@ -88,6 +88,6 @@ def generate_param(phone_number):
       "gopay_partner": {
         "phone_number": phone_number,
         "country_code": "62",
-        "redirect_url": "https://midtrans.com"
+        "redirect_url": "https://mywebstore.com/gopay-linking-finish"
       }
     }
