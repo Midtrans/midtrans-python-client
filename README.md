@@ -311,6 +311,7 @@ Subscription API only support for `Credit Card` and `Gopay`
 #### Subscription API for Credit Card
 
 To use subscription API for credit card, you should first obtain the 1-click saved token, [refer to this docs.](https://docs.midtrans.com/en/core-api/advanced-features?id=recurring-transaction-with-subscriptions-api) 
+
 You will receive `saved_token_id` as part of the response when the initial card payment is accepted (will also available in the HTTP notification's JSON), [refer to this docs.](https://docs.midtrans.com/en/core-api/advanced-features?id=sample-3ds-authenticate-json-response-for-the-first-transaction)
 
 ```python
@@ -369,7 +370,8 @@ update_subscription_response = core_api.update_subscription(subscription_id_resp
 
 #### Subscription API for Gopay
 
-To use subscription API for gopay, you should first link your customer gopay account with gopay tokenization API, refer to this section `2.2.E Tokenization API` 
+To use subscription API for gopay, you should first link your customer gopay account with gopay tokenization API, [refer to this section](#22e-tokenization-api)
+
 You will receive gopay payment token using get_payment_account API call 
 Check Tokenization examples folder (/examples/tokenization)
 
