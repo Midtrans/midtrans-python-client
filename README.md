@@ -304,9 +304,8 @@ For full example on Credit Card 3DS transaction refer to:
 - [Flask App examples](/examples/flask_app) that implement Snap & Core Api
 
 ### 2.2.D Subscription API
-You can see some Subscription API examples [here](examples/subscription), [Subscription API Docs](https://api-docs.midtrans.com/#subscription-api)
 
-Subscription API only support for `Credit Card` and `Gopay`
+You can see some Subscription API examples [here](examples/subscription), [Subscription API Docs](https://api-docs.midtrans.com/#subscription-api)
 
 #### Subscription API for Credit Card
 
@@ -372,9 +371,9 @@ update_subscription_response = core_api.update_subscription(subscription_id_resp
 
 To use subscription API for gopay, you should first link your customer gopay account with gopay tokenization API, [refer to this section](#22e-tokenization-api)
 
-You will receive gopay payment token using get_payment_account API call 
+You will receive gopay payment token using `get_payment_account` API call 
 
-Check [Tokenization examples](/examples/tokenization)
+You can see some Subscription API examples [here](examples/subscription)
 
 ### 2.2.E Tokenization API
 You can see some Tokenization API examples [here](examples/tokenization), [Tokenization API Docs](https://api-docs.midtrans.com/#gopay-tokenization)
