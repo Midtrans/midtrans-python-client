@@ -11,10 +11,10 @@ core_api = midtransclient.CoreApi(
 )
 
 # To use API subscription for credit card, you should first obtain the 1 click token
-# Refer to docs: https://docs.midtrans.com/en/core-api/advanced-features?id=recurring-transaction-with-subscriptions-api
+# Refer to this docs: https://docs.midtrans.com/en/core-api/advanced-features?id=recurring-transaction-with-subscriptions-api
 
-# You will receive saved_token_id after complete 3ds authentication (it also available in the JSON of HTTP notification)
-# Refer to docs: https://docs.midtrans.com/en/core-api/advanced-features?id=sample-3ds-authenticate-json-response-for-the-first-transaction
+# You will receive saved_token_id as part of the response when the initial card payment is accepted (will also available in the HTTP notification's JSON)
+# Refer to this docs: https://docs.midtrans.com/en/core-api/advanced-features?id=sample-3ds-authenticate-json-response-for-the-first-transaction
 # {
 #   ...
 #   "card_type": "credit",

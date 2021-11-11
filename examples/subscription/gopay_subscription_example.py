@@ -11,10 +11,10 @@ core_api = midtransclient.CoreApi(
 )
 
 # To use API subscription for gopay, you should first link your customer gopay account with gopay tokenization
-# Refer to docs: https://api-docs.midtrans.com/#gopay-tokenization
+# Refer to this docs: https://api-docs.midtrans.com/#gopay-tokenization
 
-# You will receive gopay payment token with get_payment_account API
-# Check Tokenization examples folder (/examples/tokenization)
+# You will receive gopay payment token using `get_payment_account` API call.
+# You can see some Tokenization API examples here (examples/tokenization)
 # {
 #     "status_code": "200",
 #     "payment_type": "gopay",
