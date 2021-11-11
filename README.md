@@ -373,7 +373,8 @@ update_subscription_response = core_api.update_subscription(subscription_id_resp
 To use subscription API for gopay, you should first link your customer gopay account with gopay tokenization API, [refer to this section](#22e-tokenization-api)
 
 You will receive gopay payment token using get_payment_account API call 
-Check Tokenization examples folder (/examples/tokenization)
+
+Check [Tokenization examples](/examples/tokenization)
 
 ### 2.2.E Tokenization API
 You can see some Tokenization API examples [here](examples/tokenization), [Tokenization API Docs](https://api-docs.midtrans.com/#gopay-tokenization)
