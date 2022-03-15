@@ -45,7 +45,7 @@ class HttpClient(object):
 
         # only merge if custom headers exist
         if custom_headers:
-            headers = {**default_headers, **headers}
+            headers = {**default_headers, **custom_headers}
 
         response_object = self.http_client.request(
             method,
