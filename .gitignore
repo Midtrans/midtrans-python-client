@@ -9,3 +9,4 @@ push_to_twine.sh
 ./Pipfile
 env/
 .DS_STORE
+.idea
