@@ -68,7 +68,7 @@ def test_is_custom_headers_applied():
         custom_headers=custom_headers)
 
         # Fetch the headers from requests.request arguments
-        headers = mock_request.call_args.kwargs['headers']
+        headers = mock_request.call_args[1]['headers']
         
         # Make sure default header still exist
         assert headers.get('content-type') == 'application/json'
