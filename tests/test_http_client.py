@@ -1,4 +1,5 @@
 import pytest
+from unittest.mock import patch
 from .helpers import is_str
 from .context import HttpClient
 import datetime
@@ -46,6 +47,35 @@ def test_response_not_json_exception():
             parameters='')
     except Exception as e:
         assert 'JSONDecodeError' in repr(e)
+
+def test_is_custom_headers_applied():
+    http_client = HttpClient()
+
+    custom_headers = {
+        'X-Override-Notification':'https://example.org'
+    }
+
+    # Mock requests
+    with patch('requests.request') as mock_request:
+        # Set status code to 200 to prevent MidtransAPIError
+        mock_request.return_value.status_code = 200 
+
+        # Trigger request
+        http_client.request(method='post',
+        server_key='SB-Mid-server-GwUP_WGbJPXsDzsNEBRs8IYA',
+        request_url='https://app.sandbox.midtrans.com/snap/v1/transactions',
+        parameters=generate_param_min(),
+        custom_headers=custom_headers)
+
+        # Fetch the headers from requests.request arguments
+        headers = mock_request.call_args.kwargs['headers']
+        
+        # Make sure default header still exist
+        assert headers.get('content-type') == 'application/json'
+
+        # Assert custom headers
+        assert 'X-Override-Notification' in headers
+        assert headers.get('X-Override-Notification') == 'https://example.org'
 
 # TODO test GET request
 
