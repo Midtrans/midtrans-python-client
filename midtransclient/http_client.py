@@ -47,6 +47,22 @@ class HttpClient(object):
         if custom_headers:
             headers = {**default_headers, **custom_headers}
 
+        # raise Midtrans error if server_key is not valid format
+        if server_key == "" or server_key is None:
+            raise MidtransAPIError(
+                message='The ServerKey is invalid, as it is an empty string or Null. Please double-check your API key. You can check the ServerKey from the Midtrans Dashboard. See https://docs.midtrans.com/en/midtrans-account/overview?id=retrieving-api-access-keys for the details or contact support at support@midtrans.com if you have any questions.',
+                api_response_dict=None,
+                http_status_code=0,
+                raw_http_client_data=None
+            )
+        if " " in server_key:
+            raise MidtransAPIError(
+                message='The ServerKey is contains white-space. Please double-check your API key. You can check the ServerKey from the Midtrans Dashboard. See https://docs.midtrans.com/en/midtrans-account/overview?id=retrieving-api-access-keys for the details or contact support at support@midtrans.com if you have any questions.',
+                api_response_dict=None,
+                http_status_code=0,
+                raw_http_client_data=None
+            )
+
         response_object = self.http_client.request(
             method,
             request_url,
