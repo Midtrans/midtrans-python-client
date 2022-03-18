@@ -39,7 +39,7 @@ class HttpClient(object):
         default_headers = {
             'content-type': 'application/json',
             'accept': 'application/json',
-            'user-agent': 'midtransclient-python/1.2.0'
+            'user-agent': 'midtransclient-python/1.4.1'
         }
         headers = default_headers
 

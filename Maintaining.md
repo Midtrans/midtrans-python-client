@@ -12,8 +12,9 @@
 	- Install project as local package `pip install -e .`
 - Make your code changes
 - Increase `version` value on:
-	- `./setup.py` file
-	- `./midtransclient/__init__.py` file
+    - `./setup.py` file
+    - `./midtransclient/__init__.py` file
+    - `./midtransclient/http_client.py` file on User-Agent value
 - To install the package locally with a symlink `pip install -e .`
 - To run test, run `pytest`
 	- To run specific test, e.g: `pytest -k "test_core_api_charge_fail_401"`

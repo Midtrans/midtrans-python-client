@@ -58,7 +58,7 @@ def test_snap_status_fail_404():
 
 def test_snap_request_fail_401():
     snap = generate_snap_instance()
-    snap.api_config.server_key=''
+    snap.api_config.server_key='dummy'
     param = generate_param_min()
     err = ''
     try:
@@ -94,7 +94,7 @@ def test_snap_request_fail_zero_gross_amount():
 
 def test_snap_exception_MidtransAPIError():
     snap = generate_snap_instance()
-    snap.api_config.server_key=''
+    snap.api_config.server_key='dummy'
     param = generate_param_min()
     err = ''
     try:

@@ -20,7 +20,7 @@ test_req = pkg_req + [
 
 setup(
     name="midtransclient",
-    version="1.4.0",
+    version="1.4.1",
     author="Midtrans - Integration Support Team",
     author_email="support@midtrans.com",
     license='MIT',
