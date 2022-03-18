@@ -77,42 +77,6 @@ def test_is_custom_headers_applied():
         assert 'X-Override-Notification' in headers
         assert headers.get('X-Override-Notification') == 'https://example.org'
 
-def test_serverkey_empty():
-    http_client = HttpClient()
-    err = ''
-    try:
-        response_dict, response_object = http_client.request(method='post',
-                                                             server_key='',
-                                                             request_url='https://app.sandbox.midtrans.com/snap/v1/transactions',
-                                                             parameters=generate_param_min())
-    except Exception as e:
-        err = e
-    assert 'The ServerKey is invalid, as it is an empty string or Null' in err.message
-
-def test_serverkey_none():
-    http_client = HttpClient()
-    err = ''
-    try:
-        response_dict, response_object = http_client.request(method='post',
-                                                             server_key=None,
-                                                             request_url='https://app.sandbox.midtrans.com/snap/v1/transactions',
-                                                             parameters=generate_param_min())
-    except Exception as e:
-        err = e
-    assert 'The ServerKey is invalid, as it is an empty string or Null' in err.message
-
-def test_serverkey_contain_whitespace():
-    http_client = HttpClient()
-    err = ''
-    try:
-        response_dict, _ = http_client.request(method='post',
-                                               server_key='test ',
-                                               request_url='https://app.sandbox.midtrans.com/snap/v1/transactions',
-                                               parameters=generate_param_min())
-    except Exception as e:
-        err = e
-    assert 'The ServerKey is contains white-space.' in err.message
-
 # TODO test GET request
 
 # ======== HELPER FUNCTIONS BELOW ======== #
