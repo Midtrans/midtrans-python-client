@@ -40,7 +40,9 @@ class CoreApi:
             'post',
             self.api_config.server_key,
             api_url,
-            parameters)
+            parameters,
+            self.api_config.custom_headers,
+            self.api_config.proxies)
 
         return response_dict
 
