@@ -250,7 +250,7 @@ def test_core_api_charge_fail_401():
         err = e
     assert 'MidtransAPIError' in err.__class__.__name__
     assert '401' in err.message
-    assert 'authorized' in err.message
+    # assert 'authorized' in err.message # disabled due to 1OMS changed the err.message to no longer contains this keyword
 
 def test_core_api_charge_fail_empty_param():
     core = generate_core_api_instance()

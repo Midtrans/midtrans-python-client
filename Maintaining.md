@@ -44,3 +44,7 @@ twine upload dist/* --skip-existing
 - To use docker-compose to test and run project, `cd` to repo dir
 - Run `docker-compose up`, which basically run pytest on container
 - Run `docker-compose down`, to clean up when done
+
+## TODO
+- need a better test cases / coverage
+- check if any test cases break due to post-1OMS API behavior changes
